@@ -1,5 +1,5 @@
 #!/bin/bash
-source export
+source exports
 
 echo $TERRAGOAT_RESOURCE_GROUP
 echo $TERRAGOAT_STATE_STORAGE_ACCOUNT
