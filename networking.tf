@@ -1,4 +1,4 @@
-resource "azurerm_virtual_network" "example" {
+rresource "azurerm_virtual_network" "example" {
   name                = "terragoat-vn-${var.environment}"
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.example.location
@@ -67,7 +67,7 @@ resource "azurerm_network_security_group" "bad_sg" {
 }
 
 resource "azurerm_network_watcher" "network_watcher" {
-  location            = var.location
+  location            = var.network_watcher_location
   name                = "terragoat-network-watcher-${var.environment}"
   resource_group_name = azurerm_resource_group.example.name
 }
