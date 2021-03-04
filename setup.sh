@@ -33,7 +33,7 @@ terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESO
     -backend-config "key=$TF_VAR_environment.terraform.tfstate" >> setupoutput.log && echo "Initialisation complete"
 
 echo "Terraform plan ..."
-terraform plan > plan.tf && echo "Plan saved as plan.tf"
+terraform plan > plan.log && echo "Plan saved as plan.log"
 
 read -p "Apply ? [Y/N]" resp
 
