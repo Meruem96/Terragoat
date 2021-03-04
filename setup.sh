@@ -23,7 +23,7 @@ echo '
 variable "object_id" {
   type        = string
   description = "The object ID of the current user"
-  default     = $objectId
+  default     = '$objectId'
 }' >> variables.tf
 
 echo "Terraform init ..."
