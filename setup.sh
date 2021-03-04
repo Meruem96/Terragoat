@@ -17,6 +17,10 @@ ACCOUNT_KEY=$(az storage account keys list --resource-group $TERRAGOAT_RESOURCE_
 # Create blob container
 az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --account-key $ACCOUNT_KEY >> setupoutput.log && echo "Blob container created"
 
+# Fetch object_id
+objectId=$(az ad signed-in-user show --query objectId)
+echo """variable """
+
 echo "Terraform init ..."
 terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESOURCE_GROUP" \
     -backend-config "storage_account_name=$TERRAGOAT_STATE_STORAGE_ACCOUNT" \
