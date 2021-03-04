@@ -9,6 +9,11 @@ variable "location" {
   default = "East US"
 }
 
+variable "network_watcher_location" {
+   type    = string
+   default = "West US"
+ }
+
 variable "kuber_location" {
   type    = string
   default = "East US 2"
