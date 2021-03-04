@@ -1,3 +1,4 @@
+#!/bin/bash
 export TERRAGOAT_RESOURCE_GROUP="TerraGoatRG"
 export TERRAGOAT_STATE_STORAGE_ACCOUNT="terragoatsaclem"
 export TERRAGOAT_STATE_CONTAINER="mydevsecops"
