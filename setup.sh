@@ -30,7 +30,7 @@ read -p "Apply ? [Y/N]" resp
 
 if [[ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ]]
 then
-    terraform apply
+    terraform apply >> creationtime.log
 else
     exit
 fi
