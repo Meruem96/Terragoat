@@ -7,7 +7,7 @@ resource "azurerm_key_vault" "example" {
   sku_name                 = "premium"  
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = "181c86e0-f3c2-4267-a0ce-276c9b25ca9e"
+    object_id = data.azurerm_client_config.current.object_id
     key_permissions = [
       "create",
       "get"
