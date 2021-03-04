@@ -1,0 +1,5 @@
+export TERRAGOAT_RESOURCE_GROUP="TerraGoatRG"
+export TERRAGOAT_STATE_STORAGE_ACCOUNT="terragoatsaclem"
+export TERRAGOAT_STATE_CONTAINER="mydevsecops"
+export TF_VAR_environment="dev"
+export TF_VAR_region="westus"
