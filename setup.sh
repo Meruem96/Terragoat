@@ -28,7 +28,7 @@ terraform plan > plan.tf && echo "Plan saved as plan.tf"
 
 read -p "Apply ? [Y/N]" resp
 
-if [[ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ]]
+if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ]
 then
     terraform apply >> creationtime.log
 else
@@ -37,7 +37,8 @@ fi
 
 read -p "Destroy resource group ? [Y/N]" resp
 
-if [[ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ]]; then
+if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] 
+then
     az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes
     az group delete --resource-group "terragoat-"$TF_VAR_environment --yes 
     az group delete --resource-group "NetworkWatcherRG" --yes
