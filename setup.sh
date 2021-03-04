@@ -19,7 +19,11 @@ az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TE
 
 # Fetch object_id
 objectId=$(az ad signed-in-user show --query objectId)
-echo """variable """
+echo """variable "object_id" {
+  type        = string
+  description = "The object ID of the current user"
+  default     = $objectId
+}""" >> variables.tf
 
 echo "Terraform init ..."
 terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESOURCE_GROUP" \
