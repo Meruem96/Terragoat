@@ -14,11 +14,6 @@ variable "kuber_location" {
   default = "East US 2"
 }
 
-variable "network_watcher_location" {
-  type    = string
-  default = "West US"
-}
-
 variable "environment" {
   default     = "dev"
   description = "Must be all lowercase letters or numbers"
