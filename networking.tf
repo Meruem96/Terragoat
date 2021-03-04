@@ -37,7 +37,7 @@ resource "azurerm_network_interface" "ni_win" {
 }
 
 resource "azurerm_network_security_group" "bad_sg" {
-  location            = var.location
+  location            = var.network_watcher_location
   name                = "terragoat-${var.environment}"
   resource_group_name = azurerm_resource_group.example.name
 
