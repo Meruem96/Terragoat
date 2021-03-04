@@ -67,7 +67,7 @@ resource "azurerm_network_security_group" "bad_sg" {
 }
 
 resource "azurerm_network_watcher" "network_watcher" {
-  location            = var.network_watcher_location
+  location            = var.location
   name                = "terragoat-network-watcher-${var.environment}"
   resource_group_name = azurerm_resource_group.example.name
 }
