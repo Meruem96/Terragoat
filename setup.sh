@@ -34,7 +34,7 @@ variable "object_id" {
   default     = '$objectId'
 }' >> variables.tf && echo "OK"
 fi
-#### If error like subscription id not found --> remove object_id block in variables.tf
+
 
 echo -n "Terraform init ..."
 terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESOURCE_GROUP" \
