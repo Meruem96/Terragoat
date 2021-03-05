@@ -4,8 +4,13 @@
 
 
 >git clone https://github.com/Meruem96/terragoat.git </br>
->cd terragoat </br>
 >az login </br>
->**bash setup.sh** </br>
 
-## Possible error
+## Execution
+>cd terragoat
+>**bash setup.sh** </br>
+Apply takes ≈ 7 minutes
+
+## Possibles error
+#### Error like : subscription id not found 
+open variables.tf then delete the 'object_id' block
