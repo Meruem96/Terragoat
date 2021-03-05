@@ -47,14 +47,14 @@ terraform plan > plan.log && echo "OK (saved as plan.log)"
 
 read -p "Apply ? [Y/N]" resp
 
-if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ]
+if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
 then
     terraform apply -auto-approve
 fi
 
 read -p "Destroy resource groups ? [Y/N]" resp
 
-if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] 
+if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
 then
     az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes
     az group delete --resource-group "terragoat-"$TF_VAR_environment --yes 
