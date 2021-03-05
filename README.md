@@ -1,5 +1,9 @@
 # terragoat
 
+## Requirements
+* Terraform 0.12
+* azure cli
+
 ## Installation
 ### 1- clone repo
 git clone https://github.com/Meruem96/terragoat.git </br>
@@ -20,3 +24,4 @@ looks like :</br>
  >&nbsp;&nbsp;&nbsp;&nbsp; description = "The object ID of the current user"</br>
  >&nbsp;&nbsp;&nbsp;&nbsp; default     = ***</br>
 >}</br>
+
