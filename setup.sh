@@ -51,11 +51,9 @@ read -p "Apply ? [Y/N]" resp
 if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ]
 then
     terraform apply >> creationtime.log
-else
-    exit
 fi
 
-read -p "Destroy resource group ? [Y/N]" resp
+read -p "Destroy resource groups ? [Y/N]" resp
 
 if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] 
 then
