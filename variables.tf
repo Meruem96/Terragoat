@@ -12,7 +12,7 @@ output "current_subscription_display_name" {
 }
 
 output "subscription_id_value" {
-  value = var.subscription_id.display_name
+  value = var.subscription_id
 }
 
 variable "location" {
