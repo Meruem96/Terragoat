@@ -1,7 +1,18 @@
+data "azurerm_subscription" "current" {
+}
+
 variable "subscription_id" {
   type        = string
   description = "The subscription ID to be scanned"
   default     = null
+}
+
+output "current_subscription_display_name" {
+  value = data.azurerm_subscription.current.display_name
+}
+
+output "subscription_id_value" {
+  value = var.subscription_id.display_name
 }
 
 variable "location" {
