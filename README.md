@@ -26,8 +26,7 @@ Apply takes ≈ **7 minutes**
 
 ## Possible errors
 #### Error like : subscription id not found 
-open variables.tf then delete the '**object_id**' block
-looks like :</br>
+open variables.tf then delete the '**object_id**' block :</br>
 >variable "object_id" { </br>
  >&nbsp;&nbsp;&nbsp;&nbsp; type        = string</br>
  >&nbsp;&nbsp;&nbsp;&nbsp; description = "The object ID of the current user"</br>
