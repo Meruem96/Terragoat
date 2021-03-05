@@ -15,9 +15,9 @@ Before you proceed please take a not of these warning: </br>
 * azure cli
 
 ## Installation
-### 1- clone repo
+### [1] clone repo
 git clone https://github.com/Meruem96/terragoat.git </br>
-### 2- log in azure portal 
+### [2] log in azure portal 
 az login </br>
 
 ## Execution
@@ -26,7 +26,9 @@ az login </br>
 >**Apply takes ≈ 7 minutes**
 
 ## Possible errors
-#### Error like : subscription id not found 
+**For every possible error, re apply terraform after a minute may correct it**
+
+#### [1] Error like : subscription id not found 
 open variables.tf then delete the '**object_id**' block :</br>
 >variable "object_id" { </br>
  >&nbsp;&nbsp;&nbsp;&nbsp; type        = string</br>
