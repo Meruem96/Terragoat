@@ -24,7 +24,7 @@ az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TE
 objectId=$(az ad signed-in-user show --query objectId)
 if [ -f "variables.tf" ] && [ $(cat "variables.tf" | grep 'object_id' | wc -l) -eq 1 ]
 then
-        echo -n "objectId variable already exists."
+        echo "objectId variable already exists."
 else
         echo -n "Pushing objectId into variables.tf ..."
         echo '
