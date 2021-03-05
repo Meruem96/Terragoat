@@ -42,18 +42,20 @@ terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESO
     -backend-config="container_name=$TERRAGOAT_STATE_CONTAINER" \
     -backend-config "key=$TF_VAR_environment.terraform.tfstate" >> setupoutput.log && echo "OK"
 
-echo "Terraform plan ..."
-terraform plan > plan.log && echo "OK (saved as plan.log)"
+read -p "Export plan ? [Y/N]" resp
+if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
+then
+        echo "Terraform plan ..."
+        terraform plan > plan.log && echo "OK (saved as plan.log)"
+fi
 
 read -p "Apply ? [Y/N]" resp
-
 if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
 then
     terraform apply -auto-approve
 fi
 
 read -p "Destroy ? [Y/N]" resp
-
 if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
 then
     terraform destroy -auto-approve
