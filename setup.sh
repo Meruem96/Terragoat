@@ -19,7 +19,7 @@ az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TE
 
 # Fetch object_id
 objectId=$(az ad signed-in-user show --query objectId)
-if [ -f "variables.tf" ] && [ $(cat "variables.tf" | grep 'object_id' | wc -l) ]
+if [ -f "variables.tf" ] && [ $(cat "variables.tf" | grep 'object_id' | wc -l) -eq 1 ]
 then
         echo -n "objectId variable already exists, updating ..."
         sed -i 's/default.*/default     = '$objectId'/g' variables.tf
