@@ -19,12 +19,20 @@ az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TE
 
 # Fetch object_id
 objectId=$(az ad signed-in-user show --query objectId)
-echo '
+if [ -f "variables.tf" ] && [ $(cat "variables.tf" | grep 'object_id' | wc -l) ]
+then
+        echo -n "objectId variable already exists, updating ..."
+        sed -i 's/default.*/default     = '$objectId'/g' variables.tf
+        echo "OK"
+else
+        echo -n "Pushing objectId into variables.tf ..."
+        echo '
 variable "object_id" {
   type        = string
   description = "The object ID of the current user"
   default     = '$objectId'
 }' >> variables.tf
+fi
 
 echo "Terraform init ..."
 terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESOURCE_GROUP" \
