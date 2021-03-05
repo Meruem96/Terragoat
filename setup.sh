@@ -36,7 +36,7 @@ variable "object_id" {
 }' >> variables.tf && echo "OK"
 fi
 
-echo "Terraform init ..."
+echo -n "Terraform init ..."
 terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESOURCE_GROUP" \
     -backend-config "storage_account_name=$TERRAGOAT_STATE_STORAGE_ACCOUNT" \
     -backend-config="container_name=$TERRAGOAT_STATE_CONTAINER" \
