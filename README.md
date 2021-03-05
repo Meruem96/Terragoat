@@ -1,5 +1,5 @@
 TerraGoat is Bridgecrew's "Vulnerable by Design" Terraform repository.</br>
-This TerraGoat's version is designed for free subscription account.
+This TerraGoat's version is designed to be deployed on free subscription account.
 # Terragoat
 ![terragoat-logo](https://user-images.githubusercontent.com/61518622/110116638-0ff37500-7db8-11eb-94f6-8e7151f0112a.png)
 
