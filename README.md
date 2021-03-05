@@ -28,6 +28,10 @@ az login </br>
 ## Possible errors
 **For every possible error, re apply terraform after a minute may correct it**
 
+#### [1] Error: retrieving `contact` for KeyVault
+wait a minute then : </br>
+terraform apply
+
 #### [1] Error like : subscription id not found 
 open variables.tf then delete the '**object_id**' block :</br>
 >variable "object_id" { </br>
