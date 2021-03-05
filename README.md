@@ -32,7 +32,7 @@ az login </br>
 wait a minute then : </br>
 terraform apply
 
-#### [1] Error like : subscription id not found 
+#### [2] Error like : subscription id not found 
 open variables.tf then delete the '**object_id**' block :</br>
 >variable "object_id" { </br>
  >&nbsp;&nbsp;&nbsp;&nbsp; type        = string</br>
