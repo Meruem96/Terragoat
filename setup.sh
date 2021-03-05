@@ -48,7 +48,7 @@ read -p "Apply ? [Y/N]" resp
 
 if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ]
 then
-    terraform apply
+    terraform apply -auto-approve
 fi
 
 read -p "Destroy resource groups ? [Y/N]" resp
