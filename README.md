@@ -24,7 +24,7 @@ cd terragoat </br>
 bash setup.sh </br>
 Apply takes ≈ **7 minutes**
 
-## Possibles error
+## Possible errors
 #### Error like : subscription id not found 
 open variables.tf then delete the '**object_id**' block
 looks like :</br>
