@@ -7,7 +7,7 @@ git clone https://github.com/Meruem96/terragoat.git </br>
 az login </br>
 
 ## Execution
-cd terragoat
+cd terragoat </br>
 bash setup.sh </br>
 Apply takes ≈ **7 minutes**
 
