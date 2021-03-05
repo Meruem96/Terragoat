@@ -1,5 +1,12 @@
 # terragoat
 
+## Important notes
+* Where to get help: the [Bridgecrew Community Slack](https://slack.bridgecrew.io/?utm_source=github&utm_medium=organic_oss&utm_campaign=terragoat) </br>
+
+Before you proceed please take a not of these warning: </br>
+
+>**⚠️ TerraGoat creates intentionally vulnerable AWS resources into your account. DO NOT deploy TerraGoat in a production environment or alongside any sensitive AWS resources.**
+
 ## Requirements
 * Terraform 0.12
 * azure cli
