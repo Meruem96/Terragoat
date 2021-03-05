@@ -1,4 +1,6 @@
-# terragoat
+TerraGoat is Bridgecrew's "Vulnerable by Design" Terraform repository.
+# Terragoat
+![terragoat-logo](https://user-images.githubusercontent.com/61518622/110116638-0ff37500-7db8-11eb-94f6-8e7151f0112a.png)
 
 ## Important notes
 * Where to get help: the [Bridgecrew Community Slack](https://slack.bridgecrew.io/?utm_source=github&utm_medium=organic_oss&utm_campaign=terragoat) </br>
