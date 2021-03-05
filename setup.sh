@@ -10,8 +10,7 @@ echo -n "Resource group ..."
 az group create --location $TF_VAR_region --name $TERRAGOAT_RESOURCE_GROUP >> setupoutput.log && echo "OK"
 
 # Create storage account
-echo -n "Storage account ..."
-az storage account create --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --resource-group $TERRAGOAT_RESOURCE_GROUP --location $TF_VAR_region --sku Standard_LRS --kind StorageV2 --https-only true --encryption-services blob >> setupoutput.log && echo "OK"
+az storage account create --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --resource-group $TERRAGOAT_RESOURCE_GROUP --location $TF_VAR_region --sku Standard_LRS --kind StorageV2 --https-only true --encryption-services blob >> setupoutput.log && echo "echo -n "Storage account ...OK"
 
 # Get storage account key
 echo -n "Storage account key ..."
