@@ -52,10 +52,11 @@ then
     terraform apply -auto-approve
 fi
 
-read -p "Destroy resource groups ? [Y/N]" resp
+read -p "Destroy ? [Y/N]" resp
 
 if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
 then
+    terraform destroy -auto-approve
     az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes
     az group delete --resource-group "terragoat-"$TF_VAR_environment --yes 
     az group delete --resource-group "NetworkWatcherRG" --yes
