@@ -31,8 +31,8 @@ az login </br>
 **For every possible error, re apply terraform after a minute may correct it**
 
 #### [1] Error: retrieving `contact` for KeyVault
-wait a minute then : </br>
-terraform apply
+wait a minute then re apply by restarting the script: </br>
+bash setup.sh
 
 #### [2] Error like : subscription id not found 
 open variables.tf then delete the '**object_id**' block :</br>
