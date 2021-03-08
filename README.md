@@ -23,9 +23,9 @@ az login </br>
 ## Execution
 * cd terragoat </br>
 * bash setup.sh </br>
->If you want to export the plan or just consult it respond Y to "Export Plan ?"
->If you are ready to build the env respond Y to "Apply ?"
->**Apply takes ≈ 7 minutes**
+>If you want to export the plan or just consult it respond Y to "Export Plan ?" </br>
+>If you are ready to build the env respond Y to "Apply ?"</br>
+>**Apply takes ≈ 8 minutes**
 
 ## Possible errors
 **For every possible error, re apply terraform after a minute may correct it**
