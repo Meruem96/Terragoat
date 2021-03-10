@@ -25,20 +25,24 @@ az login </br>
 * bash setup.sh </br>
 >If you want to export the plan or just consult it respond Y to "Export Plan ?" </br>
 >If you are ready to build the env respond Y to "Apply ?"</br>
->**Apply takes ≈ 8 minutes**
+>**Apply takes ≈ 10 minutes**
 
 ## Possible errors
 **For every possible error, re apply terraform after a minute may correct it**
 
-#### [1] Error: retrieving `contact` for KeyVault
-wait a minute then re apply by restarting the script: </br>
-bash setup.sh
+### [1] Error: retrieving `contact` for KeyVault 
+>wait a minute then re apply by restarting the script: </br>
+>bash setup.sh
 
-#### [2] Error like : subscription id not found 
-open variables.tf then delete the '**object_id**' block :</br>
+### [2] Error like : subscription id not found 
+>open variables.tf then delete the '**object_id**' block :</br>
 >variable "object_id" { </br>
  >&nbsp;&nbsp;&nbsp;&nbsp; type        = string</br>
  >&nbsp;&nbsp;&nbsp;&nbsp; description = "The object ID of the current user"</br>
  >&nbsp;&nbsp;&nbsp;&nbsp; default     = ***</br>
 >}</br>
 
+### [3] Error loading state: Error retrieving keys for Storage Account :
+>"timeout waiting for token from portal" in the error message ?</br>
+>wait a minute then re apply by restarting the script: </br>
+>bash setup.sh
