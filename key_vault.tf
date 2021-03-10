@@ -11,12 +11,14 @@ resource "azurerm_key_vault" "example" {
     key_permissions = [
       "create",
       "get",
-      "delete"
+      "delete",
+      "purge"
     ]
     secret_permissions = [
       "set",
       "get",
-      "delete"
+      "delete",
+      "purge"
     ]
   }
   tags = {
