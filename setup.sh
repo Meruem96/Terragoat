@@ -46,13 +46,13 @@ terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESO
 if ! [ -d .plan ]; then
     mkdir .plan
 fi
-echo -n "Exporting plan ..."
-terraform plan -out=.plan/ && echo "OK"
+echo "Exporting plan ..."
+terraform plan > .plan/plan.log
 
 read -p "Apply ? (Launch scripts = create the environement) [Y/N] " resp
 if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
 then
-    terraform apply ".plan/" -auto-approve
+    terraform apply ".plan/plan.log" -auto-approve
 fi
 
 
