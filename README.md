@@ -23,9 +23,14 @@ az login </br>
 ## Execution
 * cd terragoat </br>
 * bash setup.sh </br>
->If you want to export the plan or just consult it respond Y to "Export Plan ?" </br>
->If you are ready to build the env respond Y to "Apply ?"</br>
+>If you are ready to build the env respond Y to "Apply"</br>
+>If you want to erase every resource created respond Y to "Destroy"</vr>
 >**Apply takes ≈ 10 minutes**
+
+## Logs
+    In analyse purpose, logs can be found in '.log' folder
+    + setupoutput.log :: every resource created with azure cli
+    + tfplan :: plan output of terraform scripts
 
 ## Possible errors
 **For every possible error, re apply terraform after a minute may correct it**
@@ -46,3 +51,7 @@ az login </br>
 >"timeout waiting for token from portal" in the error message ?</br>
 >wait a minute then re apply by restarting the script: </br>
 >bash setup.sh
+
+### [4] Error about a resource name already taken
+>every case sensitive resource names are created with a random value at the end to avoid this error, but sometimes you can be out of luck ... </br>
+>restart the script will correct the error
