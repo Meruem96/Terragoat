@@ -47,13 +47,13 @@ if ! [ -d .plan ]; then
     mkdir .plan
 fi
 echo -n "Exporting plan ..."
-terraform plan > .plan/plan.log && echo "OK"
+terraform plan > .plan/plan.json && echo "OK"
 
 read -p "Apply ? (Launch scripts = create the environement) [Y/N] " resp
 if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
 then
-    terraform apply ".plan/plan.log"
-    
+    terraform apply ".plan/plan.json"
+
 fi
 
 
