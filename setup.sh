@@ -46,8 +46,8 @@ read -p "Export plan ? (Useful to analyse what will exactly be create) [Y/N] " r
 if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
 then
         echo -n "Terraform plan ..."
-        terraform plan -out=plan.log && echo "OK (saved as plan.log)"
-        
+        terraform plan > plan.log && echo "OK (saved as plan.log)"
+
         read -p "Apply ? (Launch scripts = create the environement) [Y/N] " resp
         if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
         then
