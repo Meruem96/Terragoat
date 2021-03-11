@@ -54,7 +54,7 @@ terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESO
 
 # Exporting plan to $tfplan path, that will be used to apply
 echo -n "Exporting plan ..."
-terraform plan > $tfplan && echo "OK"
+terraform plan -out=$tfplan > ".logs/testplan" && echo "OK"
 
 # Apply = create resources annonced in the plan
 read -p "Apply ? (Launch scripts = create the environement) [Y/N] " resp
