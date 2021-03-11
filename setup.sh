@@ -42,23 +42,17 @@ terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESO
     -backend-config="container_name=$TERRAGOAT_STATE_CONTAINER" \
     -backend-config "key=$TF_VAR_environment.terraform.tfstate" >> setupoutput.log && echo "OK"
 
-read -p "Export plan ? (Useful to analyse what will exactly be create) [Y/N] " resp
+
+if ! [ -d .plan ]; then
+    mkdir .plan
+fi
+echo -n "Exporting plan ..."
+terraform plan -out=.plan/ && echo "OK"
+
+read -p "Apply ? (Launch scripts = create the environement) [Y/N] " resp
 if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
 then
-        echo -n "Terraform plan ..."
-        terraform plan > plan.log && echo "OK (saved as plan.log)"
-
-        read -p "Apply ? (Launch scripts = create the environement) [Y/N] " resp
-        if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
-        then
-            terraform apply "plan.log" -auto-approve
-        fi
-else
-    read -p "Apply ? (Launch scripts = create the environement) [Y/N] " resp
-    if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
-    then
-        terraform apply -auto-approve
-    fi
+    terraform apply ".plan/" -auto-approve
 fi
 
 
