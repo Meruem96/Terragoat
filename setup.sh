@@ -14,18 +14,20 @@ if ! [ -d .logs ]; then
 fi
 
 # Create resource group
-echo -n "Resource group ..."
+echo -n "Resource group ..."; echo "Resource group :" >> $setupoutput
 az group create --location $TF_VAR_region --name $TERRAGOAT_RESOURCE_GROUP >> $setupoutput && echo "OK"
 
 # Create storage account
+echo "Storage account :" >> $setupoutput
 az storage account create --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --resource-group $TERRAGOAT_RESOURCE_GROUP --location $TF_VAR_region --sku Standard_LRS --kind StorageV2 --https-only true --encryption-services blob >> $setupoutput && echo "Storage account ...OK"
 
 # Get storage account key
 echo -n "Storage account key ..."
 ACCOUNT_KEY=$(az storage account keys list --resource-group $TERRAGOAT_RESOURCE_GROUP --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query [0].value -o tsv) >> $setupoutput && echo "OK"
+echo "Storage account key : $ACCOUNT_KEY" >> $setupoutput
 
 # Create blob container
-echo -n "Blob container ..."
+echo -n "Blob container ..."; echo "Blob container : " >> $storage
 az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --account-key $ACCOUNT_KEY >> $setupoutput && echo "OK"
 
 # Fetch object_id
@@ -45,7 +47,7 @@ fi
 
 
 # Start terraform init with backend configuration
-echo -n "Terraform init ..."
+echo -n "Terraform init ..."; echo "Terraform init : " >> setupoutput
 terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESOURCE_GROUP" \
     -backend-config "storage_account_name=$TERRAGOAT_STATE_STORAGE_ACCOUNT" \
     -backend-config="container_name=$TERRAGOAT_STATE_CONTAINER" \
@@ -57,12 +59,17 @@ echo -n "Exporting plan ..."
 terraform plan -out=$tfplan > ".logs/testplan" && echo "OK"
 
 # Apply = create resources annonced in the plan
+
 read -p "Apply ? (Launch scripts = create the environement) [Y/N] " resp
 if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
 then
+    start=`date +%s`
     terraform apply $tfplan
+    end=`date +%s`
+    echo "Apply took $((end-start))s"
 
 fi
+
 
 
 
