@@ -35,22 +35,21 @@ In analyse purpose, logs can be found in '.logs' folder
 ## Possible errors
 **For every possible error, re apply terraform after a minute may correct it**
 
-### [1] Error: retrieving `contact` for KeyVault 
->wait a minute then re apply by restarting the script: </br>
->bash setup.sh
+### [1] Restart the script
++ Error: retrieving **contact** for KeyVault 
++ Error loading state: Error retrieving keys for Storage Account
++ Error about a resource name already taken
+>every case sensitive resource names are created with a random value at the end to avoid this error, but sometimes you can be out of luck ... </br>
+>restarting the script will correct the error
+
+
 
 ### [2] Error like : subscription id not found 
 >open variables.tf then delete the '**object_id**' block :</br>
->variable "object_id" { </br>
+>~~variable "object_id" { </br>
  >&nbsp;&nbsp;&nbsp;&nbsp; type        = string</br>
  >&nbsp;&nbsp;&nbsp;&nbsp; description = "The object ID of the current user"</br>
- >&nbsp;&nbsp;&nbsp;&nbsp; default     = ***</br>
->}</br>
+ >&nbsp;&nbsp;&nbsp;&nbsp; default     = *** </br>
+ >}~~</br>
 
-### [3] Error loading state: Error retrieving keys for Storage Account :
->"timeout waiting for token from portal" in the error message ?</br>
->wait a minute then re apply by restarting the script </br>
 
-### [4] Error about a resource name already taken
->every case sensitive resource names are created with a random value at the end to avoid this error, but sometimes you can be out of luck ... </br>
->restarting the script will correct the error
