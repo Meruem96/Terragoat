@@ -28,7 +28,7 @@ az login </br>
 >**Apply takes ≈ 10 minutes**
 
 ## Logs
-In analyse purpose, logs can be found in '.log' folder
+In analyse purpose, logs can be found in '.logs' folder
 + setupoutput.log :: every resource created with azure cli
 + tfplan :: plan output of terraform scripts
 
