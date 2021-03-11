@@ -47,13 +47,21 @@ if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp"
 then
         echo -n "Terraform plan ..."
         terraform plan -out=plan.log && echo "OK (saved as plan.log)"
+        
+        read -p "Apply ? (Launch scripts = create the environement) [Y/N] " resp
+        if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
+        then
+            terraform apply "plan.log" -auto-approve
+        fi
+else
+    read -p "Apply ? (Launch scripts = create the environement) [Y/N] " resp
+    if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
+    then
+        terraform apply -auto-approve
+    fi
 fi
 
-read -p "Apply ? (Launch scripts = create the environement) [Y/N] " resp
-if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
-then
-    terraform apply -auto-approve
-fi
+
 
 read -p "Destroy ? (Erase everything you just created)[Y/N] " resp
 if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
