@@ -24,13 +24,13 @@ az login </br>
 * cd terragoat </br>
 * bash setup.sh </br>
 >If you are ready to build the env respond Y to "Apply"</br>
->If you want to erase every resource created respond Y to "Destroy"</vr>
+>If you want to erase every resource created respond Y to "Destroy"</br>
 >**Apply takes ≈ 10 minutes**
 
 ## Logs
-    In analyse purpose, logs can be found in '.log' folder
-    + setupoutput.log :: every resource created with azure cli
-    + tfplan :: plan output of terraform scripts
+In analyse purpose, logs can be found in '.log' folder
++ setupoutput.log :: every resource created with azure cli
++ tfplan :: plan output of terraform scripts
 
 ## Possible errors
 **For every possible error, re apply terraform after a minute may correct it**
@@ -49,9 +49,8 @@ az login </br>
 
 ### [3] Error loading state: Error retrieving keys for Storage Account :
 >"timeout waiting for token from portal" in the error message ?</br>
->wait a minute then re apply by restarting the script: </br>
->bash setup.sh
+>wait a minute then re apply by restarting the script </br>
 
 ### [4] Error about a resource name already taken
 >every case sensitive resource names are created with a random value at the end to avoid this error, but sometimes you can be out of luck ... </br>
->restart the script will correct the error
+>restarting the script will correct the error
