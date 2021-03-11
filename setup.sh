@@ -46,8 +46,8 @@ terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESO
 if ! [ -d .plan ]; then
     mkdir .plan
 fi
-echo "Exporting plan ..."
-terraform plan > .plan/plan.log
+echo -n "Exporting plan ..."
+terraform plan > .plan/plan.log && echo "OK"
 
 read -p "Apply ? (Launch scripts = create the environement) [Y/N] " resp
 if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
