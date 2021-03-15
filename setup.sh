@@ -94,6 +94,7 @@ then
     if [[ $(cat log_profiles | grep 'storageAccountId' | grep $TERRAGOAT_STATE_STORAGE_ACCOUNT | wc -l) -eq 1 ]]; then az monitor log-profiles delete --name $log_profile_name; fi
     rm log_profiles
 
+    # Delete policy definition + assignement if exists else pass
 
 fi
 
