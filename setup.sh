@@ -19,12 +19,13 @@ az group create --location $TF_VAR_region --name $TERRAGOAT_RESOURCE_GROUP >> $s
 
 # Create storage account
 echo "Storage account :" >> $setupoutput
-
-if [[ "$(az storage account check-name --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query "nameAvailable")" == "false" ]]; then echo " $((1 + $RANDOM % 10)) taken, randomise name"; exit; fi
-
-
+# create storage account if storage account does not exists else change storage account name then create it
+if [[ "$(az storage account check-name --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query "nameAvailable")" == "false" ]]; then export TERRAGOAT_STATE_STORAGE_ACCOUNT=$TERRAGOAT_STATE_STORAGE_ACCOUNT"+$((1000 + $RANDOM % 9999))"; fi  
 
 az storage account create --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --resource-group $TERRAGOAT_RESOURCE_GROUP --location $TF_VAR_region --sku Standard_LRS --kind StorageV2 --https-only true --encryption-services blob >> $setupoutput && echo "Storage account ...OK"
+
+
+
 
 # Get storage account key
 echo -n "Storage account key ..."
