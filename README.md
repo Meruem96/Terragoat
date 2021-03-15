@@ -11,8 +11,13 @@ Before you proceed please take a not of these warning: </br>
 >**⚠️ TerraGoat creates intentionally vulnerable resources into your account. DO NOT deploy TerraGoat in a production environment or alongside any sensitive resources.**
 
 ## Requirements
-* Terraform 0.12
-* azure cli
+### **Azure portal**</br>
++ open a cloud shell (top right)</br>
+
+### **Other**
++ open a shell</br>
+  + Terraform 0.12
+  + azure cli
 
 ## Installation
 >**If you are on Azure portal, open a Cloud Shell by clicking on the cmd logo (top right).**</br> 
