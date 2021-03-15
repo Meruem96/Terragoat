@@ -70,9 +70,6 @@ then
 
 fi
 
-
-
-
 # Destroy what has been applied + all ressource groups : just to be sure 
 read -p "Destroy ? (Erase everything you just created)[Y/N] " resp
 if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
