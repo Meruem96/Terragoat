@@ -47,3 +47,4 @@ resource "azurerm_key_vault_secret" "secret" {
   name         = "terragoat-secret-${var.environment}"
   value        = random_string.password.result
 }
+
