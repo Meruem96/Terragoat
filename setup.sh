@@ -81,10 +81,19 @@ read -p "Destroy ? (Erase everything you just created)[Y/N] " resp
 if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
 then
     terraform destroy -auto-approve
-    az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes
-    az group delete --resource-group "terragoat-"$TF_VAR_environment --yes 
-    az group delete --resource-group "NetworkWatcherRG" --yes
-    log_profile_name=$(cat .logs/clearTextplan.log | grep -A10 'log_profil' | grep 'name' | tr -d ' ' | cut -d'=' -f2)
-    az monitor log-profiles delete --name $log_profile_name
+    # Delete if resource groups still exists else pass
+    if [[ $(az group exists --name $TERRAGOAT_RESOURCE_GROUP) ]]; then az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes; fi
+        
+    if [[ $(az group exists --name "terragoat-"$TF_VAR_environment) ]]; then az group delete --resource-group "terragoat-"$TF_VAR_environment --yes; fi
+
+    if [[ $(az group exists --name "NetworkWatcherRG") ]]; then az group delete --resource-group "NetworkWatcherRG" --yes; fi
+
+    # Delete log-profiles if still exists else pass
+    az monitor log-profiles list -o json > log_profiles
+    log_profile_name=$(cat log_profiles | grep $TERRAGOAT_STATE_STORAGE_ACCOUNT -B6 | grep 'name' | tr -d ' ' | tr -d ',' | cut -d':' -f2)
+    if [[ $(cat log_profiles | grep 'storageAccountId' | grep $TERRAGOAT_STATE_STORAGE_ACCOUNT | wc -l) -eq 1 ]]; then az monitor log-profiles delete --name $log_profile_name; fi
+    rm log_profiles
+
+
 fi
 
