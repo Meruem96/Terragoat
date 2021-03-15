@@ -12,10 +12,10 @@ Before you proceed please take a not of these warning: </br>
 
 ## Requirements
 ### **Azure portal**</br>
-+ open a cloud shell (top right)</br>
++ Cloud shell (top right)</br>
 
 ### **Other**
-+ open a shell</br>
++ A shell with:</br>
   + Terraform 0.12
   + azure cli
 
