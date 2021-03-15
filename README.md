@@ -15,8 +15,8 @@ Before you proceed please take a not of these warning: </br>
 * azure cli
 
 ## Installation
->**If you are on Azure portal, open a Cloud Shell by clicking on the cmd logo (top right), a storage account will ask you permission to be created.**</br> 
->**If you are on a personnal computer, open a shell**
+>**If you are on Azure portal, open a Cloud Shell by clicking on the cmd logo (top right).**</br> 
+>**If you are on a personnal computer, open a shell.**
 
 ### [1] clone repo
 git clone https://github.com/Meruem96/terragoat.git </br>
