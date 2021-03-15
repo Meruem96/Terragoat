@@ -20,7 +20,7 @@ az group create --location $TF_VAR_region --name $TERRAGOAT_RESOURCE_GROUP >> $s
 # Create storage account
 echo "Storage account :" >> $setupoutput
 
-if [[ "$(az storage account check-name --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query "nameAvailable")" == "false" ]]; then echo "$already taken, randomise name"; exit; fi
+if [[ "$(az storage account check-name --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query "nameAvailable")" == "false" ]]; then echo " $((1 + $RANDOM % 10)) taken, randomise name"; exit; fi
 
 
 
