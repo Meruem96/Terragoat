@@ -16,9 +16,9 @@ Before you proceed please take a not of these warning: </br>
 
 ### **Other**
 + A shell with:</br>
-  + Terraform 0.12
-  + azure cli
-  + git
+  + [_installation_](https://learn.hashicorp.com/tutorials/terraform/install-cli) Terraform 0.12 
+  + [_installation_](https://docs.microsoft.com/fr-fr/cli/azure/install-azure-cli) azure cli      
+  + [_installation_](https://git-scm.com/book/fr/v2/D%C3%A9marrage-rapide-Installation-de-Git) git            
 
 ## Installation
 >**If you are on Azure portal, open a Cloud Shell by clicking on the cmd logo (top right).**</br> 
