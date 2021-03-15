@@ -1,7 +1,7 @@
 #!/bin/bash
 export TERRAGOAT_RESOURCE_GROUP="TerraGoatRG"
-export TERRAGOAT_STATE_STORAGE_ACCOUNT="terragoatmodsa"
 export TERRAGOAT_STATE_CONTAINER="mydevsecops"
+export TERRAGOAT_STATE_STORAGE_ACCOUNT="terragoatmodsa"
 export TF_VAR_environment="dev"
 export TF_VAR_region="westus"
 racine=".logs/"
@@ -19,6 +19,11 @@ az group create --location $TF_VAR_region --name $TERRAGOAT_RESOURCE_GROUP >> $s
 
 # Create storage account
 echo "Storage account :" >> $setupoutput
+
+if [[ "$(az storage account check-name --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query "nameAvailable")" == "false" ]]; then echo "$already taken, randomise name"; exit; fi
+
+
+
 az storage account create --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --resource-group $TERRAGOAT_RESOURCE_GROUP --location $TF_VAR_region --sku Standard_LRS --kind StorageV2 --https-only true --encryption-services blob >> $setupoutput && echo "Storage account ...OK"
 
 # Get storage account key
