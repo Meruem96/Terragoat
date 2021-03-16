@@ -13,34 +13,48 @@ if ! [ -d .logs ]; then
     mkdir .logs
 fi
 
-if [ "$1" == "purge" ]
+if [ "$1" == "destroy" ] || [ "$1" == "-d" ] 
 then
-    # Delete if resource groups still exists else pass
-    if [[ $(az group exists --name $TERRAGOAT_RESOURCE_GROUP) ]]; then az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes; fi
-        
-    if [[ $(az group exists --name "terragoat-"$TF_VAR_environment) ]]; then az group delete --resource-group "terragoat-"$TF_VAR_environment --yes; fi
+    # Destroy what has been applied + all ressource groups : just to be sure 
+    read -p "Destroy ? (Erase everything you just created)[Y/N] " resp
+    if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
+    then
+        terraform destroy -auto-approve
+    fi
 
-    if [[ $(az group exists --name "NetworkWatcherRG") ]]; then az group delete --resource-group "NetworkWatcherRG" --yes; fi
+elif [ "$1" == "purge" ] || [ "$1" == "-p" ]
+then
+    read -p "Purge ? (If you had any error or cancel the apply and you want to clean the env respond yes) [Y/N] " resp
+    if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ] 
+    then
+       
+        # Delete if resource groups still exists else pass
+        if [[ $(az group exists --name $TERRAGOAT_RESOURCE_GROUP) ]]; then az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes && echo "Resource group erased"; fi
+            
+        if [[ $(az group exists --name "terragoat-"$TF_VAR_environment) ]]; then az group delete --resource-group "terragoat-"$TF_VAR_environment --yes && echo "Resource group erased"; fi
 
-    # Delete log-profiles if still exists else pass
-    az monitor log-profiles list -o json > log_profiles
-    log_profile_name=$(cat log_profiles | grep $TERRAGOAT_STATE_STORAGE_ACCOUNT -B6 | grep 'name' | tr -d ' ' | tr -d ',' | cut -d':' -f2)
-    if [[ $(cat log_profiles | grep 'storageAccountId' | grep $TERRAGOAT_STATE_STORAGE_ACCOUNT | wc -l) -eq 1 ]]; then az monitor log-profiles delete --name $log_profile_name; fi
-    rm log_profiles
+        if [[ $(az group exists --name "NetworkWatcherRG") ]]; then az group delete --resource-group "NetworkWatcherRG" --yes && echo "Resource group erased "; fi
 
-    # delete policies, roles, security contact
-    az policy assignment delete --name "terragoat-policy-assignment-dev"
-    az policy definition delete --name "terragoat-policy-dev" 
-    az role definition list --query "[].{description:description, name:name}" > tmproles
-    nb_roles=$(cat tmproles | grep 'This is a custom role created via Terraform' -A1 | grep 'name' | tr -d ' ' | cut -d':' -f2 | wc -l)
-    roles=$(cat tmproles | grep 'This is a custom role created via Terraform' -A1 | grep 'name' | tr -d ' ' | cut -d':' -f2)
-    for nb in $(seq 1 $nb_roles)
-    do
-        az role definition delete --name $(echo $roles | cut -d' ' -f$nb)
-    done
-    rm tmproles
+        # Delete log-profiles if still exists else pass
+        az monitor log-profiles list -o json > log_profiles
+        log_profile_name=$(cat log_profiles | grep $TERRAGOAT_STATE_STORAGE_ACCOUNT -B6 | grep 'name' | tr -d ' ' | tr -d ',' | cut -d':' -f2)
+        if [[ $(cat log_profiles | grep 'storageAccountId' | grep $TERRAGOAT_STATE_STORAGE_ACCOUNT | wc -l) -eq 1 ]]; then az monitor log-profiles delete --name $log_profile_name; fi
+        rm log_profiles
 
-    az security contact delete --name "default1" 
+        # delete policies, roles, security contact
+        az policy assignment delete --name "terragoat-policy-assignment-dev"
+        az policy definition delete --name "terragoat-policy-dev" 
+        az role definition list --query "[].{description:description, name:name}" > tmproles
+        nb_roles=$(cat tmproles | grep 'This is a custom role created via Terraform' -A1 | grep 'name' | tr -d ' ' | cut -d':' -f2 | wc -l)
+        roles=$(cat tmproles | grep 'This is a custom role created via Terraform' -A1 | grep 'name' | tr -d ' ' | cut -d':' -f2)
+        for nb in $(seq 1 $nb_roles)
+        do
+            az role definition delete --name $(echo $roles | cut -d' ' -f$nb | tr -d ' ' | tr -d '"')
+        done
+        rm tmproles
+
+        az security contact delete --name "default1" 
+    fi
 fi
 
 
@@ -110,41 +124,5 @@ fi
 
 
 
-# Destroy what has been applied + all ressource groups : just to be sure 
-read -p "Destroy ? (Erase everything you just created)[Y/N] " resp
-if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
-then
-    terraform destroy -auto-approve
-    read -p "Purge ? (If you had any error or cancel the apply and you want to clean the env respond yes) [Y/N] " resp
-    if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ] 
-    then
-       
-        # Delete if resource groups still exists else pass
-        if [[ $(az group exists --name $TERRAGOAT_RESOURCE_GROUP) ]]; then az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes && echo "Resource group erased"; fi
-            
-        if [[ $(az group exists --name "terragoat-"$TF_VAR_environment) ]]; then az group delete --resource-group "terragoat-"$TF_VAR_environment --yes && echo "Resource group erased"; fi
 
-        if [[ $(az group exists --name "NetworkWatcherRG") ]]; then az group delete --resource-group "NetworkWatcherRG" --yes && echo "Resource group erased "; fi
-
-        # Delete log-profiles if still exists else pass
-        az monitor log-profiles list -o json > log_profiles
-        log_profile_name=$(cat log_profiles | grep $TERRAGOAT_STATE_STORAGE_ACCOUNT -B6 | grep 'name' | tr -d ' ' | tr -d ',' | cut -d':' -f2)
-        if [[ $(cat log_profiles | grep 'storageAccountId' | grep $TERRAGOAT_STATE_STORAGE_ACCOUNT | wc -l) -eq 1 ]]; then az monitor log-profiles delete --name $log_profile_name; fi
-        rm log_profiles
-
-        # delete policies, roles, security contact
-        az policy assignment delete --name "terragoat-policy-assignment-dev"
-        az policy definition delete --name "terragoat-policy-dev" 
-        az role definition list --query "[].{description:description, name:name}" > tmproles
-        nb_roles=$(cat tmproles | grep 'This is a custom role created via Terraform' -A1 | grep 'name' | tr -d ' ' | cut -d':' -f2 | wc -l)
-        roles=$(cat tmproles | grep 'This is a custom role created via Terraform' -A1 | grep 'name' | tr -d ' ' | cut -d':' -f2)
-        for nb in $(seq 1 $nb_roles)
-        do
-            az role definition delete --name $(echo $roles | cut -d' ' -f$nb | tr -d ' ' | tr -d '"')
-        done
-        rm tmproles
-
-        az security contact delete --name "default1" 
-    fi
-fi
 
