@@ -76,25 +76,42 @@ then
 
 fi
 
+function get_content {
+    """
+    $arg1 > file
+    var=$(cat file)
+    rm file
+    return $var    
+    """
+}
+
+
 # Destroy what has been applied + all ressource groups : just to be sure 
 read -p "Destroy ? (Erase everything you just created)[Y/N] " resp
 if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
 then
     terraform destroy -auto-approve
-    # Delete if resource groups still exists else pass
-    if [[ $(az group exists --name $TERRAGOAT_RESOURCE_GROUP) ]]; then az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes; fi
+    read -p "Purge ? (If you had any error or cancel the apply and you want to clean the env respond yes) [Y/N] " resp
+    if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]; then
+
         
-    if [[ $(az group exists --name "terragoat-"$TF_VAR_environment) ]]; then az group delete --resource-group "terragoat-"$TF_VAR_environment --yes; fi
+        # Delete if resource groups still exists else pass
+        if [[ $(az group exists --name $TERRAGOAT_RESOURCE_GROUP) ]]; then az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes; fi
+            
+        if [[ $(az group exists --name "terragoat-"$TF_VAR_environment) ]]; then az group delete --resource-group "terragoat-"$TF_VAR_environment --yes; fi
 
-    if [[ $(az group exists --name "NetworkWatcherRG") ]]; then az group delete --resource-group "NetworkWatcherRG" --yes; fi
+        if [[ $(az group exists --name "NetworkWatcherRG") ]]; then az group delete --resource-group "NetworkWatcherRG" --yes; fi
 
-    # Delete log-profiles if still exists else pass
-    az monitor log-profiles list -o json > log_profiles
-    log_profile_name=$(cat log_profiles | grep $TERRAGOAT_STATE_STORAGE_ACCOUNT -B6 | grep 'name' | tr -d ' ' | tr -d ',' | cut -d':' -f2)
-    if [[ $(cat log_profiles | grep 'storageAccountId' | grep $TERRAGOAT_STATE_STORAGE_ACCOUNT | wc -l) -eq 1 ]]; then az monitor log-profiles delete --name $log_profile_name; fi
-    rm log_profiles
+        # Delete log-profiles if still exists else pass
+        az monitor log-profiles list -o json > log_profiles
+        log_profile_name=$(cat log_profiles | grep $TERRAGOAT_STATE_STORAGE_ACCOUNT -B6 | grep 'name' | tr -d ' ' | tr -d ',' | cut -d':' -f2)
+        if [[ $(cat log_profiles | grep 'storageAccountId' | grep $TERRAGOAT_STATE_STORAGE_ACCOUNT | wc -l) -eq 1 ]]; then az monitor log-profiles delete --name $log_profile_name; fi
+        rm log_profiles
 
-    # Delete policy definition + assignement if exists else pass
+        az policy definition list --query "[].{displayName:displayName}" -out json > policies_names
+
+    
+
 
 fi
 
