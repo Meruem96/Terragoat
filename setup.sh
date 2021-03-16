@@ -76,14 +76,6 @@ then
 
 fi
 
-function get_content {
-    """
-    $arg1 > file
-    var=$(cat file)
-    rm file
-    return $var    
-    """
-}
 
 
 # Destroy what has been applied + all ressource groups : just to be sure 
@@ -108,9 +100,21 @@ then
         if [[ $(cat log_profiles | grep 'storageAccountId' | grep $TERRAGOAT_STATE_STORAGE_ACCOUNT | wc -l) -eq 1 ]]; then az monitor log-profiles delete --name $log_profile_name; fi
         rm log_profiles
 
-        az policy definition list --query "[].{displayName:displayName}" -out json > policies_names
+        # delete policies, roles, security contact
+        az policy assignment delete --name "terragoat-policy-assignment-dev"
+        az policy definition delete --name "terragoat-policy-dev" 
+        az role definition list --query "[].{description:description, name:name}" > tmproles
+        nb_roles=$(cat tmproles | grep 'This is a custom role created via Terraform' -A1 | grep 'name' | tr -d ' ' | cut -d':' -f2 | wc -l)
+        roles=$(cat tmproles | grep 'This is a custom role created via Terraform' -A1 | grep 'name' | tr -d ' ' | cut -d':' -f2)
+        for nb in $(seq 1 $nb_roles)
+        do
+            az role definition delete --name $(echo $roles | cut -d' ' -f$nb)
+        done
+        rm tmproles
 
-    
+        az security contact delete --name "default1" 
+
+
 
 
 fi
