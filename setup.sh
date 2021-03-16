@@ -20,6 +20,7 @@ then
     if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
     then
         terraform destroy -auto-approve
+        exit
     fi
 
 elif [ "$1" == "purge" ] || [ "$1" == "-p" ]
@@ -44,6 +45,7 @@ then
         # delete policies, roles, security contact
         az policy assignment delete --name "terragoat-policy-assignment-dev"
         az policy definition delete --name "terragoat-policy-dev" 
+
         az role definition list --query "[].{description:description, name:name}" > tmproles
         nb_roles=$(cat tmproles | grep 'This is a custom role created via Terraform' -A1 | grep 'name' | tr -d ' ' | cut -d':' -f2 | wc -l)
         roles=$(cat tmproles | grep 'This is a custom role created via Terraform' -A1 | grep 'name' | tr -d ' ' | cut -d':' -f2)
@@ -54,6 +56,7 @@ then
         rm tmproles
 
         az security contact delete --name "default1" 
+        exit
     fi
 fi
 
