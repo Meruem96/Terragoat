@@ -120,11 +120,11 @@ then
     then
        
         # Delete if resource groups still exists else pass
-        if [[ $(az group exists --name $TERRAGOAT_RESOURCE_GROUP) ]]; then az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes; fi
+        if [[ $(az group exists --name $TERRAGOAT_RESOURCE_GROUP) ]]; then az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes && echo "Resource group erased"; fi
             
-        if [[ $(az group exists --name "terragoat-"$TF_VAR_environment) ]]; then az group delete --resource-group "terragoat-"$TF_VAR_environment --yes; fi
+        if [[ $(az group exists --name "terragoat-"$TF_VAR_environment) ]]; then az group delete --resource-group "terragoat-"$TF_VAR_environment --yes && echo "Resource group erased"; fi
 
-        if [[ $(az group exists --name "NetworkWatcherRG") ]]; then az group delete --resource-group "NetworkWatcherRG" --yes; fi
+        if [[ $(az group exists --name "NetworkWatcherRG") ]]; then az group delete --resource-group "NetworkWatcherRG" --yes && echo "Resource group erased "; fi
 
         # Delete log-profiles if still exists else pass
         az monitor log-profiles list -o json > log_profiles
@@ -140,7 +140,7 @@ then
         roles=$(cat tmproles | grep 'This is a custom role created via Terraform' -A1 | grep 'name' | tr -d ' ' | cut -d':' -f2)
         for nb in $(seq 1 $nb_roles)
         do
-            az role definition delete --name $(echo $roles | cut -d' ' -f$nb)
+            az role definition delete --name $(echo $roles | cut -d' ' -f$nb | tr -d '"')
         done
         rm tmproles
 
