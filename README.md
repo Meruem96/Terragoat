@@ -33,8 +33,11 @@ az login </br>
 * cd terragoat </br>
 * bash setup.sh </br>
 >If you are ready to build the env respond Y to "Apply"</br>
->If you want to erase every resource created respond Y to "Destroy"</br>
 >**Apply takes ≈ 10 minutes**
+
+## Deletion
+* If the apply succeded without any mistake use the destroy option : bash setup.sh destroy
+* If errors occurend and you want to start again from scratch purge every resource : bash setup.sh purge
 
 ## Logs
 In analyse purpose, logs can be found in '.logs' folder
