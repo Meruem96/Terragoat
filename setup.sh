@@ -136,3 +136,7 @@ fi
 
 
 
+Error: A resource with the ID "/subscriptions/83f46b93-8dd4-4823-b538-812e1e0fe5f0/resourceGroups/terragoat-dev/providers/Microsoft.Web/sites/terragoat-app-service-dev3870" already exists - to be managed via Terraform this resource needs to be imported into the State. Please see the resource documentation for "azurerm_app_service" for more information.
+
+  on app_service.tf line 12, in resource "azurerm_app_service" "app-service1":
+  12: resource azurerm_app_service "app-service1" {
