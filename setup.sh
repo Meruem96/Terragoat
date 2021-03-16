@@ -19,7 +19,7 @@ then
     read -p "Destroy ? (Erase everything you just created)[Y/N] " resp
     if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
     then
-        terraform destroy -auto-approve
+        terraform destroy -auto-approve && echo "Destroy complete"
         exit
     fi
 
@@ -56,6 +56,7 @@ then
         rm tmproles
 
         az security contact delete --name "default1" 
+        echo "Purge complete."
         exit
     fi
 fi
