@@ -140,7 +140,7 @@ then
         roles=$(cat tmproles | grep 'This is a custom role created via Terraform' -A1 | grep 'name' | tr -d ' ' | cut -d':' -f2)
         for nb in $(seq 1 $nb_roles)
         do
-            az role definition delete --name $(echo $roles | cut -d' ' -f$nb | tr -d '"')
+            az role definition delete --name $(echo $roles | cut -d' ' -f$nb | tr -d ' ' | tr -d '"')
         done
         rm tmproles
 
