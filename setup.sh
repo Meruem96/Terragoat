@@ -63,7 +63,7 @@ then
         done
         
 
-        az security contact delete --name "default1" && "echo Security contact removed"
+        az security contact delete --name "default1" && echo "Security contact removed"
         echo "Purge complete."
         exit
     fi
