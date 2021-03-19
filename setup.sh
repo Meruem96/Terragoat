@@ -46,7 +46,7 @@ then
         # Delete log-profiles if still exists else pass
         az monitor log-profiles list --query "[].{id:id, name:name}" > log_profiles
         log_profile_count=$(cat log_profiles | grep "id" | grep -i "terragoat" | wc -l)
-        if [[ $log_profile_count -ge 1 ]]; then az monitor log-profiles delete --name $(cat log_profiles | grep 'id' -A1 | grep 'name' | tr -d ' ' | cut -d':' -f2 | tr -d '"'); fi
+        if [[ $log_profile_count -ge 1 ]]; then az monitor log-profiles delete --name $(cat log_profiles | grep 'id' -A1 | grep 'name' | tr -d ' ' | cut -d':' -f2 | tr -d '"') && echo "Log Profile removed"; fi
         rm log_profiles
 
         # delete policies, roles, security contact
