@@ -46,12 +46,12 @@ then
         # Delete log-profiles if still exists else pass
         az monitor log-profiles list --query "[].{id:id, name:name}" > log_profiles
         log_profile_count=$(cat log_profiles | grep "id" | grep -i "terragoat" | wc -l)
-        if [[ $log_profile_count -ge 1 ]]; then az monitor log-profiles delete --name $(cat log_profiles | grep 'id' -A1 | grep 'name' | tr -d ' ' | cut -d':' -f2 | tr -d '"') && echo "Log Profile removed"; fi
+        if [[ $log_profile_count -ge 1 ]]; then az monitor log-profiles delete --name $(cat log_profiles | grep 'id' -A1 | grep 'name' | tr -d ' ' | cut -d':' -f2 | tr -d '"') ; fi
         rm log_profiles
 
         # delete policies, roles, security contact
-        az policy assignment delete --name "terragoat-policy-assignment-dev" && echo "Assignment policy removed" 
-        az policy definition delete --name "terragoat-policy-dev" && echo "Definition policy removed"
+        az policy assignment delete --name "terragoat-policy-assignment-dev"  
+        az policy definition delete --name "terragoat-policy-dev" 
 
         az role definition list --query "[].{description:description, name:name}" > tmproles
         nb_roles=$(cat tmproles | grep 'This is a custom role created via Terraform' -A1 | grep 'name' | tr -d ' ' | cut -d':' -f2 | wc -l)
@@ -59,11 +59,11 @@ then
         rm tmproles
         for nb in $(seq 1 $nb_roles)
         do
-            az role definition delete --name $(echo $roles | cut -d' ' -f$nb | tr -d ' ' | tr -d '"') && "Role definition removed"
+            az role definition delete --name $(echo $roles | cut -d' ' -f$nb | tr -d ' ' | tr -d '"') 
         done
         
 
-        az security contact delete --name "default1" && echo "Security contact removed"
+        az security contact delete --name "default1"  
         echo "Purge complete."
         exit
     fi
