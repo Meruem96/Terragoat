@@ -13,6 +13,7 @@ echo -e "Usage:"
 echo -e "\tStart setup process: bash setup.sh"
 echo -e "\tDestroy environment: bash setup.sh [destroy / -d]"
 echo -e "\tPurge environment  : bash setup.sh [purge / -p]"
+echo -e "*********************************************************"
 
 
 # Verify if .logs directory exists
@@ -28,11 +29,11 @@ then
     then
         terraform destroy -auto-approve && echo "Terraform destroy complete" || echo "Probleme with terraform destroy"
 
-        if [[ $(az group exists --name $TERRAGOAT_RESOURCE_GROUP) ]]; then az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes && echo "Resource group erased: $TERRAGOAT_RESOURCE_GROUP "; fi
+        if [[ "$(az group exists --name $TERRAGOAT_RESOURCE_GROUP)" != "false" ]]; then az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes && echo "Resource group erased: $TERRAGOAT_RESOURCE_GROUP "; fi
             
-        if [[ $(az group exists --name "terragoat-"$TF_VAR_environment) ]]; then az group delete --resource-group "terragoat-"$TF_VAR_environment --yes && echo "Resource group erased: terragoat-$TF_VAR_environment"; fi
+        if [[ "$(az group exists --name terragoat-$TF_VAR_environment)" != "false" ]]; then az group delete --resource-group "terragoat-"$TF_VAR_environment --yes && echo "Resource group erased: terragoat-$TF_VAR_environment"; fi
 
-        if [[ $(az group exists --name "NetworkWatcherRG") ]]; then az group delete --resource-group "NetworkWatcherRG" --yes && echo "Resource group erased: NetworkWatcherRG "; fi
+        if [[ "$(az group exists --name "NetworkWatcherRG")" != "false" ]]; then az group delete --resource-group "NetworkWatcherRG" --yes && echo "Resource group erased: NetworkWatcherRG "; fi
 
         exit
     fi
