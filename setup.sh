@@ -8,6 +8,13 @@ racine=".logs/"
 setupoutput=$racine"setupoutput.log"
 tfplan=$racine"tfplan"
 
+#### OPTION MESSAGE
+echo -e "Usage:"
+echo -e "\tStart setup process: bash setup.sh"
+echo -e "\tDestroy environment: bash setup.sh [destroy / -d]"
+echo -e "\tPurge environment  : bash setup.sh [purge / -p]"
+
+
 # Verify if .logs directory exists
 if ! [ -d .logs ]; then
     mkdir .logs
