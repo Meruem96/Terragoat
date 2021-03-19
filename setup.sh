@@ -19,7 +19,8 @@ then
     read -p "Destroy ? (Erase everything you just created)[Y/N] " resp
     if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
     then
-        terraform destroy -auto-approve && echo "Terraform destroy complete"
+        terraform destroy -auto-approve && echo "Terraform destroy complete" || echo "Probleme with terraform destroy"
+        echo "$(az group exists --name $TERRAGOAT_RESOURCE_GROUP)"
         if [[ $(az group exists --name $TERRAGOAT_RESOURCE_GROUP) ]]; then az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes && echo "Resource group erased: $TERRAGOAT_RESOURCE_GROUP "; fi
             
         if [[ $(az group exists --name "terragoat-"$TF_VAR_environment) ]]; then az group delete --resource-group "terragoat-"$TF_VAR_environment --yes && echo "Resource group erased: terragoat-$TF_VAR_environment"; fi
