@@ -20,7 +20,7 @@ then
     if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
     then
         terraform destroy -auto-approve && echo "Terraform destroy complete" || echo "Probleme with terraform destroy"
-        echo "$(az group exists --name $TERRAGOAT_RESOURCE_GROUP)"
+
         if [[ $(az group exists --name $TERRAGOAT_RESOURCE_GROUP) ]]; then az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes && echo "Resource group erased: $TERRAGOAT_RESOURCE_GROUP "; fi
             
         if [[ $(az group exists --name "terragoat-"$TF_VAR_environment) ]]; then az group delete --resource-group "terragoat-"$TF_VAR_environment --yes && echo "Resource group erased: terragoat-$TF_VAR_environment"; fi
@@ -37,17 +37,20 @@ then
     then
        
         # Delete if resource groups still exists else pass
+        echo "rg1: $(az group exists --name $TERRAGOAT_RESOURCE_GROUP)"
         if [[ $(az group exists --name $TERRAGOAT_RESOURCE_GROUP) ]]; then az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes && echo "Resource group erased"; fi
-            
+        echo "rg2: $(az group exists --name "terragoat-"$TF_VAR_environment)"
         if [[ $(az group exists --name "terragoat-"$TF_VAR_environment) ]]; then az group delete --resource-group "terragoat-"$TF_VAR_environment --yes && echo "Resource group erased"; fi
-
+        echo "rg3: $(az group exists --name "NetworkWatcherRG")"
         if [[ $(az group exists --name "NetworkWatcherRG") ]]; then az group delete --resource-group "NetworkWatcherRG" --yes && echo "Resource group erased "; fi
 
         # Delete log-profiles if still exists else pass
         az monitor log-profiles list --query "[].{id:id, name:name}" > log_profiles
+        cat log_profiles
         log_profile_count=$(cat log_profiles | grep "id" | grep -i "terragoat" | wc -l)
         if [[ $log_profile_count -ge 1 ]]; then az monitor log-profiles delete --name $(cat logprofiles | grep 'id' -A1 | grep 'name' | tr -d ' ' | cut -d':' -f2 | tr -d '"'); fi
         rm log_profiles
+        exit
 
         # delete policies, roles, security contact
         az policy assignment delete --name "terragoat-policy-assignment-dev"
