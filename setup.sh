@@ -46,7 +46,7 @@ then
         # Delete if resource groups still exists else pass
         if [[ "$(az group exists --name $TERRAGOAT_RESOURCE_GROUP)" != "false" ]]; then az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes && echo "Resource group erased"; fi
         
-        if [[ "$(az group exists --name "terragoat-"$TF_VAR_environment)" != "false" ]]; then az group delete --resource-group "terragoat-"$TF_VAR_environment --yes && echo "Resource group erased"; fi
+        if [[ "$(az group exists --name terragoat-$TF_VAR_environment)" != "false" ]]; then az group delete --resource-group "terragoat-"$TF_VAR_environment --yes && echo "Resource group erased"; fi
         
         if [[ "$(az group exists --name "NetworkWatcherRG")" != "false" ]]; then az group delete --resource-group "NetworkWatcherRG" --yes && echo "Resource group erased "; fi
 
