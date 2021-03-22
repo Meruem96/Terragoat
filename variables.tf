@@ -23,3 +23,13 @@ variable "environment" {
   default     = "dev"
   description = "Must be all lowercase letters or numbers"
 }
+
+variable "terragoatrg" {
+  default     = "TerraGoatRG"
+  description = "terragoat resource gorup name"
+}
+
+variable "storage_account_name" {
+  default     = "terragoatmodsa"
+  description = "must be a unique WW name"
+}
