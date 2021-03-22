@@ -77,6 +77,8 @@ then
     fi
 fi
 
+read -p "Apply ? (Deploy resources to create the TerraGoat environment) [Y/N] " resp
+if ! ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]); then exit; fi
 
 
 # Create resource group
