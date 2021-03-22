@@ -1,9 +1,10 @@
 provider "azurerm" {
   subscription_id = var.subscription_id
-  key_vault {
-    pruge_soft_delete_on_destroy = true
+  features {
+    key_vault {
+      pruge_soft_delete_on_destroy = true
+    }
   }
-  features {}
 }
 
 
