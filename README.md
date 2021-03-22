@@ -45,9 +45,9 @@ In analyse purpose, logs can be found in '.logs' folder
 + clearTextplan.log :: plan output of terraform scripts
 
 ## Possible errors
-**For every possible error, destroy then re apply**
+**For every possible error, re apply**
 
-### [1] Purge then restart the script
+### [1] Restart the script
 + Error: retrieving **contact** for KeyVault 
 + Error loading state: Error retrieving keys for Storage Account
 + Error about a resource name already taken
