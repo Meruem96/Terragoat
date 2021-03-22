@@ -29,12 +29,15 @@ then
     then
         terraform destroy -auto-approve && echo "Terraform destroy complete" || echo "Probleme with terraform destroy"
 
-        if [[ "$(az group exists --name $TERRAGOAT_RESOURCE_GROUP)" != "false" ]]; then az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes && echo "Resource group erased: $TERRAGOAT_RESOURCE_GROUP "; fi
-            
-        if [[ "$(az group exists --name terragoat-$TF_VAR_environment)" != "false" ]]; then az group delete --resource-group "terragoat-"$TF_VAR_environment --yes && echo "Resource group erased: terragoat-$TF_VAR_environment"; fi
+        read -p "Delete resource groups ? [Y/N] " resp
+        if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
+        then
+            if [[ "$(az group exists --name $TERRAGOAT_RESOURCE_GROUP)" != "false" ]]; then az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes && echo "Resource group erased: $TERRAGOAT_RESOURCE_GROUP "; fi
+                
+            if [[ "$(az group exists --name terragoat-$TF_VAR_environment)" != "false" ]]; then az group delete --resource-group "terragoat-"$TF_VAR_environment --yes && echo "Resource group erased: terragoat-$TF_VAR_environment"; fi
 
-        if [[ "$(az group exists --name "NetworkWatcherRG")" != "false" ]]; then az group delete --resource-group "NetworkWatcherRG" --yes && echo "Resource group erased: NetworkWatcherRG "; fi
-
+            if [[ "$(az group exists --name "NetworkWatcherRG")" != "false" ]]; then az group delete --resource-group "NetworkWatcherRG" --yes && echo "Resource group erased: NetworkWatcherRG "; fi
+        fi
         exit
     fi
 
