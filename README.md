@@ -42,10 +42,10 @@ az login </br>
 ## Logs
 In analyse purpose, logs can be found in '.logs' folder
 + setupoutput.log :: every resource created with azure cli
-+ tfplan :: plan output of terraform scripts
++ clearTextplan.log :: plan output of terraform scripts
 
 ## Possible errors
-**For every possible error, purge then re apply**
+**For every possible error, destroy then re apply**
 
 ### [1] Purge then restart the script
 + Error: retrieving **contact** for KeyVault 
