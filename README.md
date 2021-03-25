@@ -113,4 +113,4 @@ In analyse purpose, logs can be found in '.logs' folder
 ### For every possible error listed bellow, restart the script
 
 * Error: retrieving **contact** for KeyVault
-* Error loading state: Error retrieving keys for Storage Account
+* Error 'loading state': Error retrieving keys for Storage Account
