@@ -65,9 +65,9 @@ ACCOUNT_KEY=$(az storage account keys list --resource-group $TERRAGOAT_RESOURCE_
 az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --account-key $ACCOUNT_KEY
 ```
 
->* A storage account **must have** a unique world wide name. If you encounter an error like: _(StorageAccountAlreadyExists) The storage account named mydevsecopssa already exists under the subscription._ add at the end of the name 4 random digits.
+>* A storage account **must have** a unique world wide name. If you encounter an error like: _(StorageAccountAlreadyExists) The storage account named mydevsecopssa already exists under the subscription._.
 >
->* Change this line: _export TERRAGOAT_STATE_STORAGE_ACCOUNT="mydevsecopssa"_
+>* Change this line: _export TERRAGOAT_STATE_STORAGE_ACCOUNT="mydevsecopssa"_ by adding 4 random digits at the end.
 
 ### Apply TerraGoat
 
