@@ -48,3 +48,4 @@ resource "azurerm_key_vault_secret" "secret" {
   value        = random_string.password.result
 }
 
+
