@@ -7,6 +7,7 @@ provider "azurerm" {
   }
 }
 
+
 # Fetch current user info using the az cli
 # Not possible to get the object_id of current user
 # Terraform retreive object_id via command execution
