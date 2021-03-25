@@ -29,42 +29,84 @@ Before you proceed please take a not of these warning: </br>
 
 ## Installation
 
->**If you are on Azure portal, open a Cloud Shell by clicking on the cmd logo (top right).**</br>
->**If you are on a personnal computer, open a shell.**
+>If you are on Azure portal, open a Cloud Shell by clicking on the cmd logo (top right).
+>
+>If you are on a personnal computer, open a shell.
 
-### [1] clone repo
 
-git clone <https://github.com/Meruem96/terragoat.git> </br>
 
-### [2] log in azure portal
+## Setup
 
-az login </br>
+### Clone repo
 
-## Execution
+>git clone <https://github.com/Meruem96/terragoat.git>
 
-* cd terragoat </br>
-* bash setup.sh </br>
+### Create an Azure Storage Account backend to keep Terraform state
 
->If you are ready to build the env respond Y to "Apply"</br>
->**Apply takes ≈ 10 minutes**
+```bash
+#!/bin/bash
+export TERRAGOAT_RESOURCE_GROUP="TerraGoatRG"
+export TERRAGOAT_STATE_STORAGE_ACCOUNT="mydevsecopssa"
+export TERRAGOAT_STATE_CONTAINER="mydevsecops"
+export TF_VAR_environment="dev"
+export TF_VAR_region="westus"
 
-## Deletion
+# Connect your account
+az login
 
-* If the apply succeded without any mistake use the destroy option : bash setup.sh destroy
-* If errors occurend and you want to start again from scratch purge every resource : bash setup.sh purge
+# Create resource group
+az group create --location $TF_VAR_region --name $TERRAGOAT_RESOURCE_GROUP
+
+# Create storage account
+az storage account create --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --resource-group $TERRAGOAT_RESOURCE_GROUP --location $TF_VAR_region --sku Standard_LRS --kind StorageV2 --https-only true --encryption-services blob
+
+# Get storage account key
+ACCOUNT_KEY=$(az storage account keys list --resource-group $TERRAGOAT_RESOURCE_GROUP --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query [0].value -o tsv)
+
+# Create blob container
+az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --account-key $ACCOUNT_KEY
+```
+
+>* A storage account **must have** a unique world wide name. If you encounter an error like: _(StorageAccountAlreadyExists) The storage account named mydevsecopssa already exists under the subscription._
+>
+>* Change this line: _export TERRAGOAT_STATE_STORAGE_ACCOUNT="mydevsecopssa"_
+
+### Apply TerraGoat
+
+```bash
+# Enter in the git directory you cloned
+cd terragoat
+
+# Init TerraGoat
+terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESOURCE_GROUP" \
+    -backend-config "storage_account_name=$TERRAGOAT_STATE_STORAGE_ACCOUNT" \
+    -backend-config="container_name=$TERRAGOAT_STATE_CONTAINER" \
+    -backend-config "key=$TF_VAR_environment.terraform.tfstate"
+
+# Apply
+terraform apply
+```
+
+* **Apply takes ≈ 10 minutes**
+
+### Remove TerraGoat
+
+```bash
+terraform destroy
+
+# Delete resource group
+az group delete --name $TERRAGOAT_RESOURCE_GROUP
+```
 
 ## Logs
 
 In analyse purpose, logs can be found in '.logs' folder
 
 * setupoutput.log :: every resource created with azure cli
-* clearTextplan.log :: plan output of terraform scripts
 
 ## Possible errors
 
->**For every possible error, re apply**
-
-### [1] Restart the script
+### For every possible error listed bellow, restart the script
 
 * Error: retrieving **contact** for KeyVault
 * Error loading state: Error retrieving keys for Storage Account
@@ -73,7 +115,7 @@ In analyse purpose, logs can be found in '.logs' folder
 >every case sensitive resource names are created with a random value at the end to avoid this error, but sometimes you can be out of luck ... </br>
 >restarting the script will correct the error
 
-### [2] Error like : subscription id not found
+### Subscription id not found
 
 >open variables.tf then delete the '**object_id**' block :</br>
 >~~variable "object_id" { </br>

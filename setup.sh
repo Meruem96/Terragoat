@@ -10,7 +10,7 @@ tfplan=$racine"tfplan"
 
 #### OPTION MESSAGE
 echo -e "Usage:"
-echo -e "\tStart setup process: bash setup.sh"
+echo -e "\tStart setup process: bash setup.sh [apply / -a]"
 echo -e "\tDestroy environment: bash setup.sh [destroy / -d]"
 echo -e "\tPurge environment  : bash setup.sh [purge / -p]"
 echo -e "*********************************************************"
@@ -27,9 +27,9 @@ then
     read -p "Destroy ? (Erase everything you just created)[Y/N] " resp
     if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
     then
-        terraform destroy -auto-approve && echo "Terraform destroy complete" || echo "Probleme with terraform destroy"
+        terraform destroy -auto-approve && echo "Terraform destroy complete" || echo "Probleme with terraform destroy. /!\\ Do not destroy resource groups, re destroy /!\\ "; exit
 
-        read -p "Delete resource groups ? [Y/N] " resp
+        read -p "Delete resource groups ? (N: If you plan to re apply) [Y/N] " resp
         if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
         then
             if [[ "$(az group exists --name $TERRAGOAT_RESOURCE_GROUP)" != "false" ]]; then az group delete --resource-group $TERRAGOAT_RESOURCE_GROUP --yes && echo "Resource group erased: $TERRAGOAT_RESOURCE_GROUP "; fi
@@ -43,7 +43,7 @@ then
 
 elif [ "$1" == "purge" ] || [ "$1" == "-p" ]
 then
-    read -p "Purge ? (If you had any error or cancel the apply and you want to clean the env respond yes) [Y/N] " resp
+    read -p "Purge ? (If you had any error, cancel the apply or you want to clean the env respond Y) [Y/N] " resp
     if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ] 
     then
        
@@ -78,71 +78,77 @@ then
         echo "Purge complete."
         exit
     fi
-fi
 
-read -p "Apply ? (Deploy resources to create the TerraGoat environment) [Y/N] " resp
-if ! ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]); then exit; fi
-
-
-# Create resource group
-echo -n "Resource group ..."; echo "Resource group :" >> $setupoutput
-az group create --location $TF_VAR_region --name $TERRAGOAT_RESOURCE_GROUP >> $setupoutput && echo "OK"
-
-# Create storage account
-echo "Storage account :" >> $setupoutput
-# create storage account if storage account does not exists else change storage account name then create it
-if [[ "$(az storage account check-name --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query "nameAvailable")" == "false" ]]; then export TERRAGOAT_STATE_STORAGE_ACCOUNT=$TERRAGOAT_STATE_STORAGE_ACCOUNT"$((1000 + $RANDOM % 9999))"; fi  
-
-az storage account create --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --resource-group $TERRAGOAT_RESOURCE_GROUP --location $TF_VAR_region --sku Standard_LRS --kind StorageV2 --https-only true --encryption-services blob >> $setupoutput && echo "Storage account ...OK"
-
-
-
-
-# Get storage account key
-echo -n "Storage account key ..."
-ACCOUNT_KEY=$(az storage account keys list --resource-group $TERRAGOAT_RESOURCE_GROUP --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query [0].value -o tsv) >> $setupoutput && echo "OK"
-echo "Storage account key : $ACCOUNT_KEY" >> $setupoutput
-
-# Create blob container
-echo -n "Blob container ..."; echo "Blob container : " >> $setupoutput
-az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --account-key $ACCOUNT_KEY >> $setupoutput && echo "OK"
-
-# Fetch object_id
-objectId=$(az ad signed-in-user show --query objectId)
-if [ -f "variables.tf" ] && [ $(cat "variables.tf" | grep 'object_id' | wc -l) -eq 1 ]
+elif [ "$1" == "apply" ] || [ "$1" == "-a" ] 
 then
-        echo "objectId variable already exists."
-else
-        echo -n "Pushing objectId into variables.tf ..."
-        echo '
-variable "object_id" {
-  type        = string
-  description = "The object ID of the current user"
-  default     = '$objectId'
-}' >> variables.tf && echo "OK"
+    read -p "Init ? (Initialisation of TerraGoat environment) [Y/N] " resp
+    if ! ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]); then exit; fi
+
+
+    # Create resource group
+    echo -n "Resource group ..."; echo "Resource group :" >> $setupoutput
+    az group create --location $TF_VAR_region --name $TERRAGOAT_RESOURCE_GROUP >> $setupoutput && echo "OK"
+
+    # Create storage account
+    echo "Storage account :" >> $setupoutput
+    # create storage account if storage account does not exists else change storage account name then create it
+    if [[ "$(az storage account check-name --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query "nameAvailable")" == "false" ]]; then export TERRAGOAT_STATE_STORAGE_ACCOUNT=$TERRAGOAT_STATE_STORAGE_ACCOUNT"$((1000 + $RANDOM % 9999))"; fi  
+
+    az storage account create --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --resource-group $TERRAGOAT_RESOURCE_GROUP --location $TF_VAR_region --sku Standard_LRS --kind StorageV2 --https-only true --encryption-services blob >> $setupoutput && echo "Storage account ...OK"
+
+
+
+
+    # Get storage account key
+    echo -n "Storage account key ..."
+    ACCOUNT_KEY=$(az storage account keys list --resource-group $TERRAGOAT_RESOURCE_GROUP --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query [0].value -o tsv) >> $setupoutput && echo "OK"
+    echo "Storage account key : $ACCOUNT_KEY" >> $setupoutput
+
+    # Create blob container
+    echo -n "Blob container ..."; echo "Blob container : " >> $setupoutput
+    az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --account-key $ACCOUNT_KEY >> $setupoutput && echo "OK"
+
+    # Fetch object_id
+    objectId=$(az ad signed-in-user show --query objectId)
+    if [ -f "variables.tf" ] && [ $(cat "variables.tf" | grep 'object_id' | wc -l) -eq 1 ]
+    then
+            echo "objectId variable already exists."
+    else
+            echo -n "Pushing objectId into variables.tf ..."
+            echo '
+    variable "object_id" {
+    type        = string
+    description = "The object ID of the current user"
+    default     = '$objectId'
+    }' >> variables.tf && echo "OK"
+    fi
+
+
+    # Start terraform init with backend configuration
+    echo -n "Terraform init ..."; echo "Terraform init : " >> $setupoutput
+    terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESOURCE_GROUP" \
+        -backend-config "storage_account_name=$TERRAGOAT_STATE_STORAGE_ACCOUNT" \
+        -backend-config="container_name=$TERRAGOAT_STATE_CONTAINER" \
+        -backend-config "key=$TF_VAR_environment.terraform.tfstate" >> $setupoutput && echo "OK"
+
+
+    # Exporting plan to $tfplan path, that will be used to apply
+    echo -n "Exporting plan ..."
+    terraform plan -out=$tfplan > ".logs/clearTextplan.log" && echo "OK"
+
+    # Apply = create resources annonced in the plan
+    read -p "Apply ? (Launch scripts = create the environement) [Y/N] " resp
+    if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
+    then
+        start=`date +%s`
+        terraform apply $tfplan
+        end=`date +%s`
+        echo "Apply took $((end-start))s"
+    fi
+
+
 fi
 
 
-# Start terraform init with backend configuration
-echo -n "Terraform init ..."; echo "Terraform init : " >> $setupoutput
-terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESOURCE_GROUP" \
-    -backend-config "storage_account_name=$TERRAGOAT_STATE_STORAGE_ACCOUNT" \
-    -backend-config="container_name=$TERRAGOAT_STATE_CONTAINER" \
-    -backend-config "key=$TF_VAR_environment.terraform.tfstate" >> $setupoutput && echo "OK"
 
 
-# Exporting plan to $tfplan path, that will be used to apply
-echo -n "Exporting plan ..."
-terraform plan -out=$tfplan > ".logs/clearTextplan.log" && echo "OK"
-
-# Apply = create resources annonced in the plan
-
-read -p "Apply ? (Launch scripts = create the environement) [Y/N] " resp
-if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
-then
-    start=`date +%s`
-    terraform apply $tfplan
-    end=`date +%s`
-    echo "Apply took $((end-start))s"
-
-fi
