@@ -108,29 +108,12 @@ then
     echo -n "Blob container ..."; echo "Blob container : " >> $setupoutput
     az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --account-key $ACCOUNT_KEY >> $setupoutput && echo "OK"
 
-    # Fetch object_id
-    objectId=$(az ad signed-in-user show --query objectId)
-    if [ -f "variables.tf" ] && [ $(cat "variables.tf" | grep 'object_id' | wc -l) -eq 1 ]
-    then
-            echo "objectId variable already exists."
-    else
-            echo -n "Pushing objectId into variables.tf ..."
-            echo '
-    variable "object_id" {
-    type        = string
-    description = "The object ID of the current user"
-    default     = '$objectId'
-    }' >> variables.tf && echo "OK"
-    fi
-
-
     # Start terraform init with backend configuration
     echo -n "Terraform init ..."; echo "Terraform init : " >> $setupoutput
     terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESOURCE_GROUP" \
         -backend-config "storage_account_name=$TERRAGOAT_STATE_STORAGE_ACCOUNT" \
         -backend-config="container_name=$TERRAGOAT_STATE_CONTAINER" \
         -backend-config "key=$TF_VAR_environment.terraform.tfstate" >> $setupoutput && echo "OK"
-
 
     # Exporting plan to $tfplan path, that will be used to apply
     echo -n "Exporting plan ..."

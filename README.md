@@ -33,8 +33,6 @@ Before you proceed please take a not of these warning: </br>
 >
 >If you are on a personnal computer, open a shell.
 
-
-
 ## Setup
 
 ### Clone repo
@@ -67,7 +65,7 @@ ACCOUNT_KEY=$(az storage account keys list --resource-group $TERRAGOAT_RESOURCE_
 az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --account-key $ACCOUNT_KEY
 ```
 
->* A storage account **must have** a unique world wide name. If you encounter an error like: _(StorageAccountAlreadyExists) The storage account named mydevsecopssa already exists under the subscription._
+>* A storage account **must have** a unique world wide name. If you encounter an error like: _(StorageAccountAlreadyExists) The storage account named mydevsecopssa already exists under the subscription._ add at the end of the name 4 random digits.
 >
 >* Change this line: _export TERRAGOAT_STATE_STORAGE_ACCOUNT="mydevsecopssa"_
 
@@ -98,6 +96,12 @@ terraform destroy
 az group delete --name $TERRAGOAT_RESOURCE_GROUP
 ```
 
+>* If an error occured during destroyment like: _Error: deleting Key "terragoat-generated-certificate-dev" [...]_ just do it again:
+
+```bash
+terraform destroy
+```
+
 ## Logs
 
 In analyse purpose, logs can be found in '.logs' folder
@@ -110,16 +114,3 @@ In analyse purpose, logs can be found in '.logs' folder
 
 * Error: retrieving **contact** for KeyVault
 * Error loading state: Error retrieving keys for Storage Account
-* Error about a resource name already taken
-
->every case sensitive resource names are created with a random value at the end to avoid this error, but sometimes you can be out of luck ... </br>
->restarting the script will correct the error
-
-### Subscription id not found
-
->open variables.tf then delete the '**object_id**' block :</br>
->~~variable "object_id" { </br>
- >&nbsp;&nbsp;&nbsp;&nbsp; type        = string</br>
- >&nbsp;&nbsp;&nbsp;&nbsp; description = "The object ID of the current user"</br>
- >&nbsp;&nbsp;&nbsp;&nbsp; default     = *** </br>
- >}~~</br>
