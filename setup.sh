@@ -8,7 +8,6 @@ racine=".logs/"
 setupoutput=$racine"setupoutput.log"
 
 
-
 function init {
     # Create resource group, storage account & backend configuration
     read -p "Init ? (Initialisation of TerraGoat environment) [Y/N] " resp
