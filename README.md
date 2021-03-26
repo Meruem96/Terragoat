@@ -34,7 +34,7 @@ Before you proceed please take a not of these warning: </br>
 ### Clone repo
 
 ```bash
-git clone <https://github.com/Meruem96/terragoat.git>
+git clone https://github.com/Meruem96/terragoat.git
 ```
 
 ### Create an Azure Storage Account backend to keep Terraform state
