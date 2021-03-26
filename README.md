@@ -18,7 +18,8 @@ Before you proceed please take a not of these warning: </br>
 
 ### **Azure portal**</br>
 
-* Cloud shell (top right)</br>
+* Cloud shell (top right)
+* On the azure command line select 'PowerShell' and change it by bash on the top left.
 
 ### **Other**
 
