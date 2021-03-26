@@ -4,8 +4,7 @@ export TERRAGOAT_STATE_CONTAINER="mydevsecops"
 export TERRAGOAT_STATE_STORAGE_ACCOUNT="terragoatmodsa"
 export TF_VAR_environment="dev"
 export TF_VAR_region="westus"
-racine=".logs/"
-setupoutput=$racine"setupoutput.log"
+setupoutput=".logs/setupoutput.log"
 
 
 function init {
