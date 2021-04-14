@@ -39,6 +39,9 @@ git clone https://github.com/Meruem96/terragoat.git
 
 ### Create an Azure Storage Account backend to keep Terraform state
 
+>* ⚠️ A storage account **must have** a unique name whatever the subscription.
+> change this line: **_export TERRAGOAT_STATE_STORAGE_ACCOUNT="mydevsecopssa"_** by adding 4+ random digits at the end to avoid errors
+
 ```bash
 #!/bin/bash
 export TERRAGOAT_RESOURCE_GROUP="TerraGoatRG"
@@ -62,10 +65,6 @@ ACCOUNT_KEY=$(az storage account keys list --resource-group $TERRAGOAT_RESOURCE_
 # Create blob container
 az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --account-key $ACCOUNT_KEY
 ```
-
->* ⚠️ A storage account **must have** a unique name whatever the subscription. If you encounter an error like: _(StorageAccountAlreadyExists) The storage account named mydevsecopssa already exists under the subscription._.
->
->* Change this line: _export TERRAGOAT_STATE_STORAGE_ACCOUNT="mydevsecopssa"_ by adding 4 random digits at the end.
 
 ### Apply TerraGoat
 
