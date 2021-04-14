@@ -40,7 +40,7 @@ git clone https://github.com/Meruem96/terragoat.git
 ### Create an Azure Storage Account backend to keep Terraform state
 
 >* ⚠️ A storage account **must have** a unique name whatever the subscription.
-> change this line: **_export TERRAGOAT_STATE_STORAGE_ACCOUNT="mydevsecopssa"_** by adding 4+ random digits at the end to avoid errors
+> change this line: **_export TERRAGOAT_STATE_STORAGE_ACCOUNT="mydevsecopssa"_** by adding 4+ random digits+letters at the end to avoid errors
 
 ```bash
 #!/bin/bash
