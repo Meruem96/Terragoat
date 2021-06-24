@@ -43,7 +43,7 @@ function apply {
     read -p "Apply ? (Launch scripts = create the environement) [Y/N] " resp
     if ! ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]); then exit; fi
     start=`date +%s`
-    terraform apply
+    terraform apply -auto-approve
     end=`date +%s`
     echo "Apply took $((end-start))s"
 
