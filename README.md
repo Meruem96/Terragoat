@@ -111,3 +111,11 @@ In analyse purpose, logs can be found in '.logs' folder
 
 * Error: retrieving **contact** for KeyVault
 * Error 'loading state': Error retrieving keys for Storage Account
+
+## Easy way
+
+```bash
+git clone https://github.com/Meruem96/terragoat.git
+cd terragoat
+bash setup.sh init
+```
