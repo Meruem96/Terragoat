@@ -37,7 +37,7 @@ resource "azurerm_network_interface" "ni_win" {
 }
 
 resource "azurerm_network_security_group" "bad_sg" {
-  location            = var.network_watcher_location
+  location            = azurerm_resource_group.example.location
   name                = "terragoat-${var.environment}"
   resource_group_name = azurerm_resource_group.example.name
 
@@ -66,8 +66,13 @@ resource "azurerm_network_security_group" "bad_sg" {
   }
 }
 
+resource "azurerm_subnet_network_security_group_association" "nsg_link" {
+ network_security_group_id = azurerm_network_security_group.bad_sg.id
+ subnet_id                 = azurerm_subnet.example.id
+}
+
 resource "azurerm_network_watcher" "network_watcher" {
-  location            = var.network_watcher_location
+  location            = azurerm_resource_group.example.location
   name                = "terragoat-network-watcher-${var.environment}"
   resource_group_name = azurerm_resource_group.example.name
 }
