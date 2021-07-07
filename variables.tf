@@ -23,3 +23,8 @@ variable "environment" {
   default     = "dev"
   description = "Must be all lowercase letters or numbers"
 }
+
+variable "kuber_version" {
+  type    = string
+  default = "1.18.19"
+}
