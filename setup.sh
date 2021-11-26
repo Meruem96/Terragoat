@@ -1,9 +1,9 @@
 #!/bin/bash
-export TERRAGOAT_RESOURCE_GROUP="TerraGoatRG"
+export TERRAGOAT_RESOURCE_GROUP="RG_TP_Azure_Hardening"
 export TERRAGOAT_STATE_CONTAINER="mydevsecops"
 export TERRAGOAT_STATE_STORAGE_ACCOUNT="terragoatmodsa"
 export TF_VAR_environment="dev"
-export TF_VAR_region="westus"
+export TF_VAR_region="francecentral"
 setupoutput=".logs/setupoutput.log"
 
 
@@ -12,8 +12,8 @@ function init {
     read -p "Init ? (Initialisation of TerraGoat environment) [Y/N] " resp
     if ! ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]); then exit; fi
     # Create resource group
-    echo -n "Resource group ..."; echo "Resource group :" >> $setupoutput
-    az group create --location $TF_VAR_region --name $TERRAGOAT_RESOURCE_GROUP >> $setupoutput && echo "OK"
+    #echo -n "Resource group ..."; echo "Resource group :" >> $setupoutput
+    #az group create --location $TF_VAR_region --name $TERRAGOAT_RESOURCE_GROUP >> $setupoutput && echo "OK"
 
     # Create storage account
     echo "Storage account :" >> $setupoutput
