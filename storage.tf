@@ -40,7 +40,7 @@ resource "azurerm_storage_account" "example" {
 }
 
 resource "azurerm_storage_account_network_rules" "test" {
-  resource_group_id  = azurerm_resource_group.example.id
+  resource_group_name  = azurerm_resource_group.example.name
   storage_account_name = azurerm_storage_account.example.name
 
   default_action             = "Allow"
