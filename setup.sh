@@ -4,31 +4,25 @@ export TERRAGOAT_STATE_CONTAINER="mydevsecops"
 export TERRAGOAT_STATE_STORAGE_ACCOUNT="terragoatmodsa"
 export TF_VAR_environment="dev"
 export TF_VAR_region="francecentral"
-setupoutput=".logs/setupoutput.log"
 
 
 function init {
     # Create resource group, storage account & backend configuration
     read -p "Init ? (Initialisation of TerraGoat environment) [Y/N] " resp
     if ! ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]); then exit; fi
-    # Create resource group
-    #echo -n "Resource group ..."; echo "Resource group :" >> $setupoutput
-    #az group create --location $TF_VAR_region --name $TERRAGOAT_RESOURCE_GROUP >> $setupoutput && echo "OK"
 
     # Create storage account
-    echo "Storage account :" >> $setupoutput
+    echo "Storage account :"
     # create storage account if storage account does not exists else change storage account name then create it
-    if [[ "$(az storage account check-name --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query "nameAvailable")" == "false" ]]; then export TERRAGOAT_STATE_STORAGE_ACCOUNT=$TERRAGOAT_STATE_STORAGE_ACCOUNT"$((1000 + $RANDOM % 9999))"; fi  
-    az storage account create --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --resource-group $TERRAGOAT_RESOURCE_GROUP --location $TF_VAR_region --sku Standard_LRS --kind StorageV2 --https-only true --encryption-services blob >> $setupoutput && echo "Storage account ...OK"
+    az storage account create --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --resource-group $TERRAGOAT_RESOURCE_GROUP --location $TF_VAR_region --sku Standard_LRS --kind StorageV2 --https-only true --encryption-services blob && echo "Storage account ...OK"
 
     # Get storage account key
     echo -n "Storage account key ..."
-    ACCOUNT_KEY=$(az storage account keys list --resource-group $TERRAGOAT_RESOURCE_GROUP --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query [0].value -o tsv) >> $setupoutput && echo "OK"
-    echo "Storage account key : $ACCOUNT_KEY" >> $setupoutput
+    ACCOUNT_KEY=$(az storage account keys list --resource-group $TERRAGOAT_RESOURCE_GROUP --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query [0].value -o tsv) && echo "OK"
 
     # Create blob container
-    echo -n "Blob container ..."; echo "Blob container : " >> $setupoutput
-    az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --account-key $ACCOUNT_KEY >> $setupoutput && echo "OK"
+    echo -n "Blob container ..."; echo "Blob container : " 
+    az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --account-key $ACCOUNT_KEY && echo "OK"
 
     # Start terraform init with backend configuration
     echo -n "Terraform init ..."; echo "Terraform init : " >> $setupoutput
