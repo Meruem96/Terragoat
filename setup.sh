@@ -14,8 +14,13 @@ function init {
     # Create storage account
     echo "Storage account :"
     # create storage account if storage account does not exists else change storage account name then create it
+    if [[ "$(az storage account check-name --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query "nameAvailable")" == "false" ]]
+    then 
+    echo "Storage account already created."
+    else
     az storage account create --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --resource-group $TERRAGOAT_RESOURCE_GROUP --location $TF_VAR_region --sku Standard_LRS --kind StorageV2 --https-only true --encryption-services blob && echo "Storage account ...OK"
-
+    fi  
+    
     # Get storage account key
     echo -n "Storage account key ..."
     ACCOUNT_KEY=$(az storage account keys list --resource-group $TERRAGOAT_RESOURCE_GROUP --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query [0].value -o tsv) && echo "OK"
