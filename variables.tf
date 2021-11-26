@@ -6,17 +6,7 @@ variable "subscription_id" {
 
 variable "location" {
   type    = string
-  default = "East US"
-}
-
-variable "network_watcher_location" {
-   type    = string
-   default = "East US"
- }
-
-variable "kuber_location" {
-  type    = string
-  default = "West US 2"
+  default = "francecentral"
 }
 
 variable "environment" {
