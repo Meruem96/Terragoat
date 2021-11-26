@@ -1,6 +1,6 @@
 resource azurerm_kubernetes_cluster "k8s_cluster" {
   dns_prefix          = "terragoat-${var.environment}"
-  location            = var.kuber_location
+  location            = var.location
   name                = "terragoat-aks-${var.environment}"
   kubernetes_version  = var.kuber_version
   resource_group_name = azurerm_resource_group.example.name
