@@ -18,11 +18,3 @@ data "external" "user" {
 }
 
 data "azurerm_client_config" "current" {}
-
-output "rgname" {
-  value = rg_name
-}
-
-output "rgid" {
-  value = rg_id
-}
