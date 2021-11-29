@@ -18,7 +18,7 @@ data "external" "user" {
 }
 
 data "external" "rg" {
-  program = []
+  program = ["echo", "$TERRAGOAT_RESOURCE_GROUP"]
 }
 
 data "azurerm_client_config" "current" {}
