@@ -17,19 +17,10 @@ data "external" "user" {
   program = ["az", "ad", "signed-in-user", "show", "--query", "{displayName: displayName,objectId: objectId,objectType: objectType,upn: upn}"]
 }
 
-data "external" "rg" {
-  program = ["rg.sh"]
-}
 data "azurerm_client_config" "current" {}
 
-#data "azurerm_resource_group" "example" {
-  #name = data.externale.rg.name
-#}
+data "azurerm_resource_group" 
 
-output "user" {
-  value = data.external.user
-}
-
-output "rg" {
-  value = data.external.rg
+terraform {
+  backend "local" {}
 }
