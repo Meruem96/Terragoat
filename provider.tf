@@ -17,6 +17,10 @@ data "external" "user" {
   program = ["az", "ad", "signed-in-user", "show", "--query", "{displayName: displayName,objectId: objectId,objectType: objectType,upn: upn}"]
 }
 
+data "external" "rg" {
+  program = []
+}
+
 data "azurerm_client_config" "current" {}
 
 terraform {
