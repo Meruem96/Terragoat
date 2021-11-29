@@ -19,13 +19,4 @@ data "external" "user" {
 
 data "azurerm_client_config" "current" {}
 
-terraform {
-  backend "azurerm" {
-    resource_group_name   = "tstate"
-    storage_account_name  = "tstateXXXXX"
-    container_name        = "tstate"
-    key                   = "terraform.tfstate"
-  }
-}
-
-resource "azurerm_resource_group" "example" {}
+data "external" "rg" {}
