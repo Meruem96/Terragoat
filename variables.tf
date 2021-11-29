@@ -9,5 +9,3 @@ variable "location" {
   default = "francecentral"
 }
 
-variable "ressource_group" {
-}
