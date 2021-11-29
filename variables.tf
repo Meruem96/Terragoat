@@ -10,6 +10,9 @@ variable "location" {
 }
 
 variable "rg_name" {
-  name = ""
-  id   = ""
+  type = string
+}
+
+variable "rg_id" {
+  type = string
 }
