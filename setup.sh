@@ -1,5 +1,5 @@
 #!/bin/bash
-export TERRAGOAT_RESOURCE_GROUP="RG_TP_Azure_Hardening"
+export TERRAGOAT_RESOURCE_GROUP="RG_TP_Azure_Hardening_01"
 export TERRAGOAT_STATE_CONTAINER="mydevsecops"
 export TERRAGOAT_STATE_STORAGE_ACCOUNT="terragoatmodsa"
 export TF_VAR_environment="dev"
@@ -39,7 +39,7 @@ function init {
         -backend-config "key=$TF_VAR_environment.terraform.tfstate" >> $setupoutput && echo "OK"
     
     # Import the resource group
-    terraform import azurerm_resource_group.example $TERRAGOAT_RESOURCE_GROUP_ID
+    terraform plan -var "rg_name=$TERRAGOAT_RESOURCE_GROUP"
 }
 
 function apply {
