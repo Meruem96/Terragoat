@@ -1,4 +1,1 @@
-echo {
-'rgname':'name',
-'rgid':'id'
-}
+echo "{'rgname':'name','rgid':'id'}"
