@@ -24,3 +24,7 @@ data "azurerm_resource_group" "example" {
   location = var.location
 
 }
+
+output "var" {
+  value = TF_VAR_RG_name
+}
