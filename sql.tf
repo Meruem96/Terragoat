@@ -9,7 +9,7 @@ resource "azurerm_sql_firewall_rule" "example" {
 resource "azurerm_sql_server" "example" {
   name                         = "terragoat-sqlserver-${var.environment}${random_integer.rnd_int.result}"
   resource_group_name          = var.rg_name
-  location                     = azurerm_resource_group.example.location
+  location                     = var.location
   version                      = "12.0"
   administrator_login          = "ariel"
   administrator_login_password = "Aa12345678"
@@ -34,7 +34,7 @@ resource "azurerm_mssql_server_security_alert_policy" "example" {
 
 resource "azurerm_mysql_server" "example" {
   name                = "terragoat-mysql-${var.environment}${random_integer.rnd_int.result}"
-  location            = azurerm_resource_group.example.location
+  location            = var.location
   resource_group_name = var.rg_name
 
   administrator_login          = "terragoat-${var.environment}"
@@ -53,7 +53,7 @@ resource "azurerm_mysql_server" "example" {
 
 resource "azurerm_postgresql_server" "example" {
   name                         = "terragoat-postgresql-${var.environment}${random_integer.rnd_int.result}"
-  location                     = azurerm_resource_group.example.location
+  location                     = var.location
   resource_group_name          = var.rg_name
   sku_name                     = "B_Gen5_2"
   storage_mb                   = 5120
