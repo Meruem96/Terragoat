@@ -20,9 +20,9 @@ data "external" "user" {
 data "azurerm_client_config" "current" {}
 
 output "rgname" {
-  value = rg_name.value
+  value = rg_name
 }
 
 output "rgid" {
-  value = rg_id.value
+  value = rg_id
 }
