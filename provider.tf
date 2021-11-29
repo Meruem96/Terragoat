@@ -17,10 +17,6 @@ data "external" "user" {
   program = ["az", "ad", "signed-in-user", "show", "--query", "{displayName: displayName,objectId: objectId,objectType: objectType,upn: upn}"]
 }
 
-data "azurerm_resource_group" "example" {
-  name = 
-}
-
 data "azurerm_client_config" "current" {}
 
 terraform {
