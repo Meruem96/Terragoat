@@ -19,6 +19,10 @@ data "external" "user" {
 
 data "azurerm_client_config" "current" {}
 
-output "var" {
-  value = TF_VAR_RG_name
+output "rgname" {
+  value = rg_name.value
+}
+
+output "rgid" {
+  value = rg_id.value
 }
