@@ -6,14 +6,14 @@ export TF_VAR_environment="dev"
 export TERRAGOAT_RESOURCE_GROUP_ID=`az group show --name $TERRAGOAT_RESOURCE_GROUP --query id --output tsv`
 export TF_VAR_region="francecentral"
 
-echo $TERRAGOAT_RESOURCE_GROUP_ID
 
 function init {
     # Create resource group, storage account & backend configuration
     read -p "Init ? (Initialisation of TerraGoat environment) [Y/N] " resp
     if ! ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]); then exit; fi
 
-    # Create storage account
+    # Create the storage account if it not already exists
+    # Change this part to check if a storage account containing "terragoatmodsa"1234 already exists -> use it or create it
     echo "Storage account :"
     # create storage account if storage account does not exists else change storage account name then create it
     if [[ "$(az storage account check-name --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query "nameAvailable")" == "false" ]]
@@ -38,6 +38,7 @@ function init {
         -backend-config="container_name=$TERRAGOAT_STATE_CONTAINER" \
         -backend-config "key=$TF_VAR_environment.terraform.tfstate" >> $setupoutput && echo "OK"
     
+    # Import the resource group
     terraform import azurerm_resource_group.example $TERRAGOAT_RESOURCE_GROUP_ID
 }
 
