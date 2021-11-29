@@ -14,7 +14,7 @@ resource "azurerm_subnet" "example" {
 
 resource "azurerm_network_interface" "ni_linux" {
   name                = "terragoat-linux-${var.environment}"
-  location            = azurerm_resource_group.example.location
+  location            = var.location
   resource_group_name = var.rg_name
 
   ip_configuration {
@@ -26,7 +26,7 @@ resource "azurerm_network_interface" "ni_linux" {
 
 resource "azurerm_network_interface" "ni_win" {
   name                = "terragoat-win-${var.environment}"
-  location            = azurerm_resource_group.example.location
+  location            = var.location
   resource_group_name = var.rg_name
 
   ip_configuration {
@@ -37,7 +37,7 @@ resource "azurerm_network_interface" "ni_win" {
 }
 
 resource "azurerm_network_security_group" "bad_sg" {
-  location            = azurerm_resource_group.example.location
+  location            = var.location
   name                = "terragoat-${var.environment}"
   resource_group_name = var.rg_name
 
@@ -72,7 +72,7 @@ resource "azurerm_subnet_network_security_group_association" "nsg_link" {
 }
 
 resource "azurerm_network_watcher" "network_watcher" {
-  location            = azurerm_resource_group.example.location
+  location            = var.location
   name                = "terragoat-network-watcher-${var.environment}"
   resource_group_name = var.rg_name
 }
