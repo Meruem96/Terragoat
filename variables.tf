@@ -18,3 +18,7 @@ variable "kuber_version" {
   type    = string
   default = "1.18.19"
 }
+
+variable "rg_name" {
+  type = string
+}
