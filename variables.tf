@@ -8,3 +8,6 @@ variable "location" {
   type    = string
   default = "francecentral"
 }
+
+variable "ressource_group" {
+}
