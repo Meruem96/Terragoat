@@ -39,7 +39,7 @@ function init {
         -backend-config "key=$TF_VAR_environment.terraform.tfstate" && echo "OK"
     
     # Import the resource group
-    terraform plan -var "rg_name=$TERRAGOAT_RESOURCE_GROUP"
+    terraform plan -var "rg_name=$TERRAGOAT_RESOURCE_GROUP" -out plan
 }
 
 function apply {
