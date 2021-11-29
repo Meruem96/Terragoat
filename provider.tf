@@ -18,7 +18,7 @@ data "external" "user" {
 }
 
 data "external" "rg" {
-  program = ["bash", "rg.sh"]
+  program = ["rg.sh"]
 }
 data "azurerm_client_config" "current" {}
 
