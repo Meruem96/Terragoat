@@ -18,8 +18,3 @@ data "external" "user" {
 }
 
 data "azurerm_client_config" "current" {}
-
-data "external" "rg" {
-  name = ""
-  id = ""
-}
