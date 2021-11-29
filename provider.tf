@@ -18,8 +18,3 @@ data "external" "user" {
 
 data "azurerm_client_config" "current" {}
 
-terraform {
-  required_version = ">=0.12.0"
-  backend "azurerm" {
-  }
-}
