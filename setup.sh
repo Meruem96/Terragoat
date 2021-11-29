@@ -3,8 +3,10 @@ export TERRAGOAT_RESOURCE_GROUP="RG_TP_Azure_Hardening"
 export TERRAGOAT_STATE_CONTAINER="mydevsecops"
 export TERRAGOAT_STATE_STORAGE_ACCOUNT="terragoatmodsa"
 export TF_VAR_environment="dev"
+export TERRAGOAT_RESOURCE_GROUP_ID=`az group show --name $TERRAGOAT_RESOURCE_GROUP --query id --output tsv`
 export TF_VAR_region="francecentral"
 
+echo $TERRAGOAT_RESOURCE_GROUP_ID
 
 function init {
     # Create resource group, storage account & backend configuration
@@ -35,6 +37,8 @@ function init {
         -backend-config "storage_account_name=$TERRAGOAT_STATE_STORAGE_ACCOUNT" \
         -backend-config="container_name=$TERRAGOAT_STATE_CONTAINER" \
         -backend-config "key=$TF_VAR_environment.terraform.tfstate" >> $setupoutput && echo "OK"
+    
+    terraform import azurerm_resource_group.example $
 }
 
 function apply {
