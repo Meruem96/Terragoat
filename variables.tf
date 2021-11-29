@@ -9,3 +9,7 @@ variable "location" {
   default = "francecentral"
 }
 
+variable "rg_name" {
+  name = ""
+  id   = ""
+}
