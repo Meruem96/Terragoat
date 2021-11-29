@@ -12,7 +12,7 @@ resource azurerm_linux_virtual_machine "linux_machine" {
   location                        = var.location
   name                            = "terragoat-linux"
   network_interface_ids           = [azurerm_network_interface.ni_linux.id]
-  resource_group_name             = azurerm_resource_group.example.name
+  resource_group_name             = var.rg_name
   size                            = "Standard_F2"
   disable_password_authentication = false
   source_image_reference {
@@ -38,7 +38,7 @@ resource azurerm_windows_virtual_machine "windows_machine" {
   location              = var.location
   name                  = "tg-win"
   network_interface_ids = [azurerm_network_interface.ni_win.id]
-  resource_group_name   = azurerm_resource_group.example.name
+  resource_group_name   = var.rg_name
   size                  = "Standard_F2"
   os_disk {
     caching              = "ReadWrite"
