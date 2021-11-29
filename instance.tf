@@ -57,3 +57,39 @@ resource azurerm_windows_virtual_machine "windows_machine" {
     environment = var.environment
   }
 }
+
+resource "azurerm_dev_test_global_vm_shutdown_schedule" "linux_auto_shutdown" {
+  virtual_machine_id = azurerm_linux_virtual_machine.linux_machine.id
+  location           = var.location
+  enabled            = true
+
+  daily_recurrence_time = "2100"
+  timezone              = "Europe/Paris"
+
+  notification_settings {
+    enabled         = false
+  }
+  tags = {
+  terragoat   = true
+  environment = var.environment
+  }
+}
+
+resource "azurerm_dev_test_global_vm_shutdown_schedule" "windows_auto_shutdown" {
+  virtual_machine_id = azurerm_windows_virtual_machine.windows_machine.id
+  location           = var.location
+  enabled            = true
+
+  daily_recurrence_time = "2100"
+  timezone              = "Europe/Paris"
+
+  notification_settings {
+    enabled         = false
+  }
+  tags = {
+  terragoat   = true
+  environment = var.environment
+  }
+}
+
+
