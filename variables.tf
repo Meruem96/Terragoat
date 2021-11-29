@@ -3,3 +3,8 @@ variable "subscription_id" {
   description = "The subscription ID to be scanned"
   default     = null
 }
+
+variable "location" {
+  type    = string
+  default = "francecentral"
+}
