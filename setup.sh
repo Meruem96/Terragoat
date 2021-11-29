@@ -38,7 +38,7 @@ function init {
         -backend-config="container_name=$TERRAGOAT_STATE_CONTAINER" \
         -backend-config "key=$TF_VAR_environment.terraform.tfstate" >> $setupoutput && echo "OK"
     
-    terraform import azurerm_resource_group.example $
+    terraform import azurerm_resource_group.example $TERRAGOAT_RESOURCE_GROUP_ID
 }
 
 function apply {
