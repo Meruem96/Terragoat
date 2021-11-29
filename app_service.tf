@@ -1,6 +1,6 @@
 resource azurerm_app_service_plan "example" {
   name                = "terragoat-app-service-plan-${var.environment}"
-  location            = azurerm_resource_group.example.location
+  location            = var.location
   resource_group_name = var.rg_name
 
   sku {
