@@ -57,7 +57,7 @@ function destroy {
     # Destroy what has been applied + all ressource groups : just to be sure 
     read -p "Destroy ? (Erase everything terraform created)[Y/N] " resp
     if ! ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]); then exit; fi
-    terraform destroy -auto-approve && echo "Terraform destroy complete" || echo -e "Probleme with terraform destroy. \n! Do not delete resource groups, re destroy !\n"
+    terraform destroy -var "rg_name=$TERRAGOAT_RESOURCE_GROUP" -auto-approve && echo "Terraform destroy complete" || echo -e "Probleme with terraform destroy. \n! Do not delete resource groups, re destroy !\n"
 
     read -p "Delete resource groups ? (N: If you plan to re apply) [Y/N] " resp
     if [ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]
