@@ -32,11 +32,11 @@ function init {
     az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --account-key $ACCOUNT_KEY && echo "OK"
 
     # Start terraform init with backend configuration
-    echo -n "Terraform init ..."; echo "Terraform init : " >> $setupoutput
+    echo -n "Terraform init ..."; echo "Terraform init : "
     terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESOURCE_GROUP" \
         -backend-config "storage_account_name=$TERRAGOAT_STATE_STORAGE_ACCOUNT" \
         -backend-config="container_name=$TERRAGOAT_STATE_CONTAINER" \
-        -backend-config "key=$TF_VAR_environment.terraform.tfstate" >> $setupoutput && echo "OK"
+        -backend-config "key=$TF_VAR_environment.terraform.tfstate" && echo "OK"
     
     # Import the resource group
     terraform plan -var "rg_name=$TERRAGOAT_RESOURCE_GROUP"
