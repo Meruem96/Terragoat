@@ -21,11 +21,9 @@ do
   ACCOUNT_KEY=$(az storage account keys list --resource-group $TERRAGOAT_RESOURCE_GROUP --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query [0].value -o tsv) && echo "OK"
   
   # Create blob container
-  az storage container exists --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --name $TERRAGOAT_STATE_CONTAINER --account-key $ACCOUNT_KEY
-  exit
-  if [[ "$(az storage container exists --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --name $TERRAGOAT_STATE_CONTAINER --account-key $ACCOUNT_KEY)" == "false" ]]
+  if [[ "$(az storage container exists --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --name $TERRAGOAT_STATE_CONTAINER --account-key $ACCOUNT_KEY)" == "true" ]]
   then 
-  echo "Storage account already created."
+  echo "Container already created."
   else
   az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --account-key $ACCOUNT_KEY && echo "OK"
   fi
