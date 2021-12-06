@@ -9,6 +9,11 @@ variable "location" {
   default = "francecentral"
 }
 
+variable "location_nw" {
+  type    = string
+  default = "francesouth"
+}
+
 variable "environment" {
   default     = "dev"
   description = "Must be all lowercase letters or numbers"
