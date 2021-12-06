@@ -35,8 +35,11 @@ do
         
   terraform plan -var "rg_name=$TERRAGOAT_RESOURCE_GROUP" -out "plan$i"
   read -p "Apply ?" resp
-  if ! ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]); then exit; fi
+  if ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ])
+  then
   terraform apply -var "rg_name=$TERRAGOAT_RESOURCE_GROUP"
+  fi
+  
   
 done
 
