@@ -6,7 +6,7 @@ export TERRAGOAT_STATE_STORAGE_ACCOUNT="terragoatmodsa"
 export TF_VAR_environment="dev"
 export TERRAGOAT_RESOURCE_GROUP_ID=`az group show --name $TERRAGOAT_RESOURCE_GROUP --query id --output tsv`
 export TF_VAR_region="francecentral"
-"""
+
 
 function init {
     # Create resource group, storage account & backend configuration
@@ -111,7 +111,7 @@ function purge {
 #if ! [ -d .logs ]; then
 #    mkdir .logs
 #fi
-"""
+
 if [ "$1" == "init" ] || [ "$1" == "-i" ]; then init && apply 
 elif [ "$1" == "apply" ] || [ "$1" == "-a" ]; then apply
 elif [ "$1" == "destroy" ] || [ "$1" == "-d" ]; then destroy    
