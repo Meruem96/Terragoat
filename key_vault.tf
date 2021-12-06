@@ -3,6 +3,7 @@ resource "azurerm_key_vault" "example" {
   location                 = var.location
   resource_group_name      = var.rg_name
   tenant_id                = data.azurerm_client_config.current.tenant_id
+  soft_delete_enabled      = false
   purge_protection_enabled = false
   sku_name                 = "premium"  
   access_policy {
