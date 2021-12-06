@@ -18,10 +18,10 @@ do
   fi  
 
   # Retreive storage account key
-  ACCOUNT_KEY=$(az storage account keys list --resource-group $TERRAGOAT_RESOURCE_GROUP --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query [0].value -o tsv) >> echo "OK"
+  ACCOUNT_KEY=$(az storage account keys list --resource-group $TERRAGOAT_RESOURCE_GROUP --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query [0].value -o tsv) && echo "OK"
   
   # Create blob container
-  az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --account-key $ACCOUNT_KEY >> echo "OK"
+  az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --account-key $ACCOUNT_KEY && echo "OK"
   
   # Init terraform
   terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESOURCE_GROUP" \
@@ -30,6 +30,7 @@ do
         -backend-config "key=$TF_VAR_environment.terraform.tfstate"
         
   terraform plan -var "rg_name=$TERRAGOAT_RESOURCE_GROUP" -out "plan$i"
+   if [[ "" == "false" ]]
   terraform apply -var "rg_name=$TERRAGOAT_RESOURCE_GROUP"
   
 done
