@@ -55,7 +55,7 @@ do
     read -p "Destroy ?" resp
     if ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ])
     then
-    terraform destroy
+    terraform destroy -var "rg_name=$TERRAGOAT_RESOURCE_GROUP"
     fi
 
 done
