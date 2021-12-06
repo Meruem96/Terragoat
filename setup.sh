@@ -28,7 +28,7 @@ do
   echo "Storage account already created."
   else
   az storage container create --name $TERRAGOAT_STATE_CONTAINER --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --account-key $ACCOUNT_KEY && echo "OK"
-  
+  fi
   # Init terraform
   terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESOURCE_GROUP" \
         -backend-config "storage_account_name=$TERRAGOAT_STATE_STORAGE_ACCOUNT" \
