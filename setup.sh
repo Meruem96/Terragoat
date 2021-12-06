@@ -55,7 +55,7 @@ do
     read -p "Destroy ?" resp
     if ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ])
     then
-    terraform destroy auto-approve
+    terraform destroy
     fi
 
 done
