@@ -24,5 +24,5 @@ variable "rg_name" {
 }
 
 variable "timezone" {
-  value = "Central Europe Standard Time"
+  default = "Central Europe Standard Time"
 }
