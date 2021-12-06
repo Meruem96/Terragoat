@@ -64,7 +64,7 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "linux_auto_shutdown" {
   enabled            = true
 
   daily_recurrence_time = "2100"
-  timezone              = "Europe/Paris"
+  timezone              = var.timezone
 
   notification_settings {
     enabled         = false
@@ -81,7 +81,7 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "windows_auto_shutdown" 
   enabled            = true
 
   daily_recurrence_time = "2100"
-  timezone              = "Europe/Paris"
+  timezone              = var.timezone
 
   notification_settings {
     enabled         = false
