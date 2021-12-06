@@ -40,6 +40,21 @@ do
   
 done
 
+read -p "Destroy ?" resp
+if ! ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]); then exit; fi
+for i in $(seq 1 $TERRAGOAT_STACKS_NUM)
+do
+  export TERRAGOAT_RESOURCE_GROUP="RG_TP_Azure_Hardening_0"$i
+  export TERRAGOAT_STATE_STORAGE_ACCOUNT="tpazureterragoatmodsa0"$i
+  terraform init \ 
+    -backend-config="resource_group_name=$TERRAGOAT_RESOURCE_GROUP" \
+    -backend-config "storage_account_name=$TERRAGOAT_STATE_STORAGE_ACCOUNT" \
+    -backend-config="container_name=$TERRAGOAT_STATE_CONTAINER" \
+    -backend-config "key=$TF_VAR_environment.terraform.tfstate"
+    
+    terraform destroy auto-approve
+done
+
 
 
 """
