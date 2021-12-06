@@ -11,7 +11,7 @@ variable "location" {
 
 variable "location_nw" {
   type    = string
-  default = "northeurope"
+  default = "eastus"
 }
 
 variable "environment" {
