@@ -29,9 +29,9 @@ do
   fi
   # Init terraform
   terraform init -reconfigure -backend-config="resource_group_name=$TERRAGOAT_RESOURCE_GROUP" \
-        -backend-config "storage_account_name=$TERRAGOAT_STATE_STORAGE_ACCOUNT" \
+        -backend-config="storage_account_name=$TERRAGOAT_STATE_STORAGE_ACCOUNT" \
         -backend-config="container_name=$TERRAGOAT_STATE_CONTAINER" \
-        -backend-config "key=$TF_VAR_environment.terraform.tfstate"
+        -backend-config="key=$TF_VAR_environment.terraform.tfstate"
         
   terraform plan -var "rg_name=$TERRAGOAT_RESOURCE_GROUP" -out "plan$i"
   read -p "Apply ? ($i)" resp
@@ -49,11 +49,10 @@ for i in $(seq 1 $TERRAGOAT_STACKS_NUM)
 do
   export TERRAGOAT_RESOURCE_GROUP="RG_TP_Azure_Hardening_0"$i
   export TERRAGOAT_STATE_STORAGE_ACCOUNT="tpazureterragoatmodsa0"$i
-  terraform init \ 
-    -backend-config="resource_group_name=$TERRAGOAT_RESOURCE_GROUP" \
-    -backend-config "storage_account_name=$TERRAGOAT_STATE_STORAGE_ACCOUNT" \
+  terraform init -backend-config="resource_group_name=$TERRAGOAT_RESOURCE_GROUP" \
+    -backend-config="storage_account_name=$TERRAGOAT_STATE_STORAGE_ACCOUNT" \
     -backend-config="container_name=$TERRAGOAT_STATE_CONTAINER" \
-    -backend-config "key=$TF_VAR_environment.terraform.tfstate"
+    -backend-config="key=$TF_VAR_environment.terraform.tfstate"
     
     terraform destroy auto-approve
 done
