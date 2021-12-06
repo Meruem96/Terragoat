@@ -30,7 +30,7 @@ do
         -backend-config "key=$TF_VAR_environment.terraform.tfstate"
         
   terraform plan -var "rg_name=$TERRAGOAT_RESOURCE_GROUP" -out "plan$i"
-  echo "Apply ?"
+  read -p "Apply ?" $resp
   if ! ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]); then exit; fi
   terraform apply -var "rg_name=$TERRAGOAT_RESOURCE_GROUP"
   
