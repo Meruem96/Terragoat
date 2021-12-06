@@ -3,7 +3,7 @@
 export TERRAGOAT_STATE_CONTAINER="mydevsecops"
 export TF_VAR_environment="dev"
 export TF_VAR_region="francecentral"
-export TERRAGOAT_STACKS_NUM=1
+export TERRAGOAT_STACKS_NUM=2
 
 for i in $(seq 1 $TERRAGOAT_STACKS_NUM)
 do
