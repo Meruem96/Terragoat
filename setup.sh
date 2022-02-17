@@ -40,6 +40,9 @@ do
   
 done
 
+read -p "Next step : Destroy. Continue ? [Y/N] " resp
+if ! ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]); then exit; fi
+
 
 for i in $(seq 1 $TERRAGOAT_STACKS_NUM)
 do
