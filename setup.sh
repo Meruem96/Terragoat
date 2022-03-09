@@ -34,9 +34,7 @@ do
         -backend-config="container_name=$TERRAGOAT_STATE_CONTAINER" \
         -backend-config="key=$TF_VAR_environment.terraform.tfstate"
         
-  terraform plan -var sa_id=$TERRAGOAT_ID_STORAGE_ACCOUNT -var rg_name=$TERRAGOAT_RESOURCE_GROUP
-  read -p "Apply ? [Y/N] " resp
-  if ! ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]); then exit; fi
+  #terraform plan -var sa_id=$TERRAGOAT_ID_STORAGE_ACCOUNT -var rg_name=$TERRAGOAT_RESOURCE_GROUP -out plan$i
   terraform apply -var sa_id=$TERRAGOAT_ID_STORAGE_ACCOUNT -var rg_name=$TERRAGOAT_RESOURCE_GROUP
 
   
@@ -56,7 +54,7 @@ do
     -backend-config="container_name=$TERRAGOAT_STATE_CONTAINER" \
     -backend-config="key=$TF_VAR_environment.terraform.tfstate"
     
-    terraform destroy -var "rg_name=$TERRAGOAT_RESOURCE_GROUP"
+    terraform destroy -var sa_id=$TERRAGOAT_ID_STORAGE_ACCOUNT -var rg_name=$TERRAGOAT_RESOURCE_GROUP
 
 
 done
