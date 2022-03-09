@@ -27,6 +27,9 @@ variable "kuber_version" {
 variable "rg_name" {
   type = string
 }
+variable "sa_id" {
+  type = string
+}
 
 variable "timezone" {
   default = "Central Europe Standard Time"
