@@ -9,7 +9,7 @@ for i in $(seq 1 $TERRAGOAT_STACKS_NUM)
 do
   export TERRAGOAT_RESOURCE_GROUP="RG_TP_Azure_Hardening_0"$i
   export TERRAGOAT_STATE_STORAGE_ACCOUNT="tpazureterragoatmodsa0"$i
-  TERRAGOAT_ID_STORAGE_ACCOUNT=$(az storage account show --name TERRAGOAT_STATE_STORAGE_ACCOUNT --resource-group $TERRAGOAT_RESOURCE_GROUP --query id --output tsv)
+  TERRAGOAT_ID_STORAGE_ACCOUNT=$(az storage account show --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --resource-group $TERRAGOAT_RESOURCE_GROUP --query id --output tsv)
   echo "RG id : " $TERRAGOAT_ID_STORAGE_ACCOUNT 
   # create storage account if storage account does not exists else change storage account name then create it
   if [[ "$(az storage account check-name --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query "nameAvailable")" == "false" ]]
