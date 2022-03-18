@@ -72,7 +72,7 @@ resource "azurerm_subnet_network_security_group_association" "nsg_link" {
 }
 
 resource "azurerm_network_watcher" "network_watcher" {
-  location            = var.location_nw
+  location            = var.location
   name                = "terragoat-network-watcher-${var.environment}"
   resource_group_name = var.rg_name
 }
