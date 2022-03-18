@@ -9,14 +9,15 @@ for i in $(seq 1 $TERRAGOAT_STACKS_NUM)
 do
   export TERRAGOAT_RESOURCE_GROUP="RG_TP_Azure_Hardening_0"$i
   export TERRAGOAT_STATE_STORAGE_ACCOUNT="tpazureterragoatmodsa0"$i
-  TERRAGOAT_ID_STORAGE_ACCOUNT=$(az storage account show --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --resource-group $TERRAGOAT_RESOURCE_GROUP --query id --output tsv)
-  # create storage account if storage account does not exists else change storage account name then create it
+    # create storage account if storage account does not exists else change storage account name then create it
   if [[ "$(az storage account check-name --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query "nameAvailable")" == "false" ]]
   then 
   echo "Storage account already created."
   else
   az storage account create --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --resource-group $TERRAGOAT_RESOURCE_GROUP --location $TF_VAR_region --sku Standard_LRS --kind StorageV2 --https-only true --encryption-services blob && echo "Storage account ...OK"
   fi  
+
+  TERRAGOAT_ID_STORAGE_ACCOUNT=$(az storage account show --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --resource-group $TERRAGOAT_RESOURCE_GROUP --query id --output tsv)
 
   # Retreive storage account key
   ACCOUNT_KEY=$(az storage account keys list --resource-group $TERRAGOAT_RESOURCE_GROUP --account-name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query [0].value -o tsv) && echo "OK"
