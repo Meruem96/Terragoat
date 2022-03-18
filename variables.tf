@@ -11,7 +11,7 @@ variable "location" {
 
 variable "location_nw" {
   type    = string
-  default = "eastnorway"
+  default = "norwayeast"
 }
 
 variable "environment" {
