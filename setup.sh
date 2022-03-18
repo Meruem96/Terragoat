@@ -5,7 +5,7 @@ export TF_VAR_environment="dev"
 export TF_VAR_region="francecentral"
 export TERRAGOAT_STACKS_NUM=1
 
-for i in $(seq 1 $TERRAGOAT_STACKS_NUM)
+for i in $(seq 2 $TERRAGOAT_STACKS_NUM)
 do
   export TERRAGOAT_RESOURCE_GROUP="RG_TP_Azure_Hardening_0"$i
   export TERRAGOAT_STATE_STORAGE_ACCOUNT="tpazureterragoatmodsa0"$i
