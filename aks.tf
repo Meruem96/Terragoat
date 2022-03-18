@@ -15,8 +15,8 @@ resource azurerm_kubernetes_cluster "k8s_cluster" {
     enabled = false
   }
   depends_on = [
-        "azurerm_network_watcher_flow_log.flow_log",
-        "azurerm_network_watcher.network_watcher",
-        
+        azurerm_network_watcher_flow_log.flow_log,
+        azurerm_network_watcher.network_watcher,
+
     ]
 }
