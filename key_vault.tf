@@ -1,10 +1,11 @@
 resource "azurerm_key_vault" "example" {
-  name                     = "terragoat-key-${var.environment}${random_integer.rnd_int.result}"
-  location                 = var.location
-  resource_group_name      = var.rg_name
-  tenant_id                = data.azurerm_client_config.current.tenant_id
-  purge_protection_enabled = false
-  sku_name                 = "premium"  
+  name                       = "terragoat-key-${var.environment}${random_integer.rnd_int.result}"
+  location                   = var.location
+  resource_group_name        = var.rg_name
+  tenant_id                  = data.azurerm_client_config.current.tenant_id
+  purge_protection_enabled   = false
+  soft_delete_retention_days = 7
+  sku_name                   = "premium"  
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
     object_id = data.external.user.result.objectId
