@@ -14,4 +14,9 @@ resource azurerm_kubernetes_cluster "k8s_cluster" {
   role_based_access_control {
     enabled = false
   }
+  depends_on = [
+        "azurerm_network_watcher_flow_log.flow_log",
+        "azurerm_network_watcher.network_watcher",
+        
+    ]
 }
