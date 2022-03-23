@@ -36,9 +36,9 @@ if ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp
             -backend-config="storage_account_name=$TERRAGOAT_STATE_STORAGE_ACCOUNT" \
             -backend-config="container_name=$TERRAGOAT_STATE_CONTAINER" \
             -backend-config="key=$TF_VAR_environment.terraform.tfstate"
-    echo "" > tf_variables.txt
-    echo "sa_id=$TERRAGOAT_ID_STORAGE_ACCOUNT" >> tf_variables.txt
-    echo "rg_name=$TERRAGOAT_RESOURCE_GROUP" >> tf_variables.txt
+    echo "" > tf_variables.tfvars
+    echo "sa_id = '$TERRAGOAT_ID_STORAGE_ACCOUNT'" >> tf_variables.tfvars
+    echo "rg_name = '$TERRAGOAT_RESOURCE_GROUP'" >> tf_variables.tfvars
             
     terraform plan -var-file=tf_variables.txt -out plan$i
     #terraform apply -var sa_id=$TERRAGOAT_ID_STORAGE_ACCOUNT -var rg_name=$TERRAGOAT_RESOURCE_GROUP
