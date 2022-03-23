@@ -6,8 +6,7 @@ export TF_VAR_region="francecentral"
 export TERRAGOAT_STACKS_NUM=3
 
 read -p "Init ? [Y/N] " resp
-if ! ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]); then exit
-else
+if ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]); then
     for i in $(seq 1 $TERRAGOAT_STACKS_NUM)
     do
     export TERRAGOAT_RESOURCE_GROUP="RG_TP_Azure_Hardening_0"$i
