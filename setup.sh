@@ -3,7 +3,7 @@
 export TERRAGOAT_STATE_CONTAINER="mydevsecops"
 export TF_VAR_environment="dev"
 export TF_VAR_region="francecentral"
-export TERRAGOAT_STACKS_NUM=3
+export TERRAGOAT_STACKS_NUM=2
 
 read -p "Init ? [Y/N] " resp
 if ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]); then
