@@ -11,11 +11,13 @@ if ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp
     do
     export TERRAGOAT_RESOURCE_GROUP="RG_TP_Azure_Hardening_0"$i
     export TERRAGOAT_STATE_STORAGE_ACCOUNT="tpazureterragoatmodsa0"$i
+    echo "Export : OK"
         # create storage account if storage account does not exists else change storage account name then create it
     if [[ "$(az storage account check-name --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --query "nameAvailable")" == "false" ]]
     then 
     echo "Storage account already created."
     else
+    echo "try to create az storage"
     az storage account create --name $TERRAGOAT_STATE_STORAGE_ACCOUNT --resource-group $TERRAGOAT_RESOURCE_GROUP --location $TF_VAR_region --sku Standard_LRS --kind StorageV2 --https-only true --encryption-services blob && echo "Storage account ...OK"
     fi  
 
