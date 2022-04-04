@@ -64,7 +64,7 @@ resource "azurerm_postgresql_server" "example" {
   administrator_login_password = "Aa12345678"
   version                      = "9.5"
   ssl_enforcement_enabled      = false
-  ssl_minimal_tls_version_enforced = "TLS1_1"
+  ssl_minimal_tls_version_enforced = "TLSEnforcementDisabled"
 }
 
 resource "azurerm_postgresql_configuration" "thrtottling_config" {
