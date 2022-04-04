@@ -42,7 +42,7 @@ if ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp
     echo 'rg_name = "'$TERRAGOAT_RESOURCE_GROUP'"' >> tf_variables.tfvars
             
     terraform plan -var-file=tf_variables.tfvars -out plan$i
-    terraform plan -var-file=tf_variables.tfvars -plan plan$i
+    terraform apply -var-file=tf_variables.tfvars
     done
 fi
 
