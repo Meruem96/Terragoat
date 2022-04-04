@@ -3,7 +3,7 @@
 export TERRAGOAT_STATE_CONTAINER="mydevsecops"
 export TF_VAR_environment="dev"
 export TF_VAR_region="francecentral"
-export TERRAGOAT_STACKS_NUM=2
+export TERRAGOAT_STACKS_NUM=1
 
 read -p "Init ? [Y/N] " resp
 if ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp" == "Yes" ]); then
@@ -41,7 +41,7 @@ if ([ "$resp" == "Y" ] || [ "$resp" == "y" ] || [ "$resp" == "yes" ] || [ "$resp
     echo 'sa_id = "'$TERRAGOAT_ID_STORAGE_ACCOUNT'"' >> tf_variables.tfvars
     echo 'rg_name = "'$TERRAGOAT_RESOURCE_GROUP'"' >> tf_variables.tfvars
             
-    terraform plan -var-file=tf_variables.tfvars -out plan$i
+    terraform plan -destroy -var-file=tf_variables.tfvars -out plan$i
     #terraform apply -var sa_id=$TERRAGOAT_ID_STORAGE_ACCOUNT -var rg_name=$TERRAGOAT_RESOURCE_GROUP
     done
 fi
