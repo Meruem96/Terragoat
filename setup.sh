@@ -60,7 +60,7 @@ do
     -backend-config="container_name=$TERRAGOAT_STATE_CONTAINER" \
     -backend-config="key=$TF_VAR_environment.terraform.tfstate"
     
-    terraform destroy -var-file=tf_variables.tfvars -plan=plan$i
+    terraform destroy -var-file=tf_variables.tfvars
 
 
 done
