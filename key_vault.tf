@@ -8,8 +8,8 @@ resource "azurerm_key_vault" "example" {
   sku_name                   = "premium"  
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = "${data.external.this_az_account.result.objectId}"
-    
+    object_id = "${data.azurerm_client_config.current.user_object_id}"
+
     key_permissions = [
       "Create",
       "Get",
