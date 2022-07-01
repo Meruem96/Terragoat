@@ -11,7 +11,7 @@ resource azurerm_kubernetes_cluster "k8s_cluster" {
     vm_size    = "Standard_D2_v2"
     node_count = 2
   }
-  azure_active_directory_role_based_access_control {
+  role_based_access_control {
     managed = true
     azure_rbac_enabled = false
   }
