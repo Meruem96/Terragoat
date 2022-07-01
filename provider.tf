@@ -20,7 +20,7 @@ provider "azurerm" {
 data "azurerm_client_config" "current" {}
 
 output "user_object_id" {
-  value = data.azurerm_client_config.current.user_object_id
+  value = data.azurerm_client_config.current.object_id
 }
 
 
