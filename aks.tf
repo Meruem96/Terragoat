@@ -12,7 +12,7 @@ resource azurerm_kubernetes_cluster "k8s_cluster" {
     node_count = 2
   }
   role_based_access_control {
-    enable = true
+    enabled = true
   }
 
 
