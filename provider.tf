@@ -13,9 +13,16 @@ provider "azurerm" {
 # Not possible to get the object_id of current user
 # Terraform retreive object_id via command execution
 # command ex: az ad signed-in-user show --query "{key:value}"
-data "external" "user" {
+/* data "external" "user" {
   program = ["az", "ad", "signed-in-user", "show", "--query", "{displayName: displayName,objectId: objectId,objectType: objectType,upn: upn}"]
+} */
+
+data "azurerm_client_config" "current" {}
+
+output "user_object_id" {
+  value = "${data.azurerm_client_config.current.user_object_id}"
 }
+
 
 data "azurerm_client_config" "current" {}
 

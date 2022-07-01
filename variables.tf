@@ -34,3 +34,4 @@ variable "sa_id" {
 variable "timezone" {
   default = "Central Europe Standard Time"
 }
+
